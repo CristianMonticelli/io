@@ -7,3 +7,9 @@ with open("esercizio33.json", "r") as file_json:
 print(type(mylist))
 print(mylist)
         
+mylist.append({"id":"Pezzolesi",
+            "importo":128.54,
+            "sconto_fattura":15})
+
+with open("esercizio33.json","w") as file_json:
+    json.dump(mylist,file_json,indent = 4)
