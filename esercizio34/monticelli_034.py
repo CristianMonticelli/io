@@ -28,7 +28,7 @@ def linear(n):
 
 def polinomial(n):
     xpoints = [i for i in range(1, 11)] # 1 .. 10
-    ypoints = [(i)**n for i in range(1, 11)] # y = n * x 
+    ypoints = [i**n for i in range(1, 11)] # y = n * x 
 
     plt.plot(xpoints, ypoints) 
     plt.savefig("polinomial.png")
@@ -36,7 +36,7 @@ def polinomial(n):
 
 def exponenzial(n):
     xpoints = [i for i in range(1, 11)] # 1 .. 10
-    ypoints = [(i for i in range(1, 11))**n] # y = n * x 
+    ypoints = [n**i for i in range(1, 11)] # y = n * x 
 
     plt.plot(xpoints, ypoints) 
     plt.savefig("exponenzial.png")
