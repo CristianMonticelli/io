@@ -83,5 +83,10 @@
         "id": "Pezzolesi",
         "importo": 128.54,
         "sconto_fattura": 15
+    },
+    {
+        "id": "Pezzolesi",
+        "importo": 128.54,
+        "sconto_fattura": 15
     }
 ]
