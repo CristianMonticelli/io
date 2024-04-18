@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Links Page</title>
+</head>
+<body>
+    <h1>studenti</h1>
+    <ol>
+        {% for studente in studenti %}
+        <li>{{studente.student}} voto {{studente.vote}}</li>
+        {% endfor%}
+
+    </ol>
+</body>
+</html>
