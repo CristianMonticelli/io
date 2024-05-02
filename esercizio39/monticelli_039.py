@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 import json
+import random
 app = Flask(__name__)
 flashcards = [{}]
 FILE_PATH = "flashcards.json"  
@@ -9,10 +10,14 @@ try:
 except FileNotFoundError:
     pass
 
+@app.route('/')
+def home():
+    return "Flashcard App"
 
-@app.route('/fashcards')
-def index():
-    return render_template('monticelli_039.html',flashcard=None)
+
+# @app.route('/flashcards')
+# def index():
+#     return render_template('monticelli_039.html',flashcard=None)
 
 @app.route('/flashcards/<id>',methods=['GET','POST'])
 def login(id=None):
@@ -38,5 +43,20 @@ def login(id=None):
     f.close()
     
     return 'non esiste una domandacon questo id'
+
+@app.route('/flashcards/random',methods=['GET','POST'])
+def random_test():
+    flashcard=random.choices(flashcards)
+    print(flashcard[0])
     
     
+    file_json = "flashcards.json"
+    with open(file_json, "w") as f:
+        json.dump(flashcards, f)
+    f.close()
+    
+    return redirect(url_for('login', id=flashcard[0]["id"]))
+    # return render_template('monticelli_039.html', flashcard=flashcard[0])
+
+if __name__ == "__main__":
+    app.run(debug=True, port=6783) 
