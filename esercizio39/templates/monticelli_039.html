@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Links Page</title>
+</head>
+<body>
+    
+<p>Question: {{ flashcard.question }}</p>
+<form method="POST">
+    <label for="answer">Your answer:</label>
+    <input type="text" id="answer" name="answer">
+    <input type="submit" value="Submit Answer">
+</form>
+{% if message %}
+    <p>{{ message }}</p>
+{% endif %}
+</body>
