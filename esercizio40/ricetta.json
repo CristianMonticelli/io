@@ -1,1 +1,8 @@
-[{"id": 1, "name": "Spaghetti Carbonara", "ingredients": ["Spaghetti", "Eggs", "Pancetta", "Parmesan Cheese"], "instructions": "Boil the spaghetti. Fry the pancetta. Mix eggs and cheese. Combine everything."}, {"id": 2, "name": "Spaghetti aglio, olio, peperoncino", "ingredients": ["Spaghetti", "aglio", "olio", "peperoncino"], "instructions": "Boil the spaghetti. put the ingredients in a bowl whith spaghetti and mix."}]
+[{"id": 1, 
+"name": "Spaghetti Carbonara", 
+"ingredients": ["Spaghetti", "Eggs", "Pancetta", "Parmesan Cheese"], 
+"instructions": "Boil the spaghetti. Fry the pancetta. Mix eggs and cheese. Combine everything."}, 
+{"id": 2, 
+"name": "Spaghetti aglio, olio, peperoncino", 
+"ingredients": ["Spaghetti", "aglio", "olio", "peperoncino"],
+ "instructions": "Boil the spaghetti. put the ingredients in a bowl whith spaghetti and mix."}]
