@@ -4,9 +4,15 @@
     <title>Links Page</title>
 </head>
 <body>
-    
-    {% for ricetta in ricette %}
-    {{ricetta['id']}}<br>
-    {{ricetta['name']}}<br>
+
+    <h1>{{ricetta_richiesta['id']}}</h1>
+    <h1>{{ricetta_richiesta['name']}}</h1>
+    <h2>Ingredients</h2>
+    <ul>
+        {% for ingredienti in ricetta_richiesta['ingredients'] %}
+    <li>{{ingredienti}}</li>
+
     {% endfor %}
+</ul>
+<p>{{ricetta_richiesta['instructions']}}</p>
 </body>

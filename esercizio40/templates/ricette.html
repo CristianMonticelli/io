@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Links Page</title>
+</head>
+<body>
+    <h1>Recipes</h1>
+<ul>
+
+    {% for link in links %}
+        <li><a href="/ricetta/{{ link.id }}">{{ link.name }}</a></li>
+    {% endfor %}
+</ul>
+</body>
