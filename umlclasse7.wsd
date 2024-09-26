@@ -1,0 +1,36 @@
+@startuml
+class MaterialeBibblioteca{
+    + titolo : str
+    + anno_pubblicazione : int
+    + disponibile : boolean 
+    + prestito (disponibile : False)
+    + restituisce (disponibile : True)
+
+}
+
+class Libro{
+    + autore : str
+    + n_pagine : int
+    + cambia_autore (autore)
+    + modifica_n_pagine (n_pagine)
+}
+
+
+class Rivista{
+    + n_edizione : int
+    + mese_pubblicazione : int
+    + modifica_edizione (n_edizione)
+    + cambia_mese_pubblicazione (mese_pubblicazione)
+}
+
+class DVD{
+    + regista : str
+    + durata : int
+    + correggi_regista (regista)
+    + modifica_durata (durata)
+}
+
+MaterialeBibblioteca <|-- Libro
+MaterialeBibblioteca <|-- DVD
+MaterialeBibblioteca <|-- Rivista
+@enduml
