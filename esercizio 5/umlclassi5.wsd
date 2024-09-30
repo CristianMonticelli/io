@@ -1,0 +1,26 @@
+@startuml es5
+
+class Dipendenti{
+    +nome : nome
+    +stipendio : stipendio
+
+    + get_nome(self):
+    + get_stipendio(self)
+}
+
+class Manager{
+    +team : team
+    
+    + get_numero_di_team(self):
+        
+}
+class Sviluppatore{
+    
+    +linguaggio : linguaggio
+    
+    + get_linguaggio_di_programmazione(self):
+        
+}
+Dipendenti<|--Manager
+Dipendenti<|--Sviluppatore
+@enduml
