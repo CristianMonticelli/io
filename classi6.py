@@ -7,10 +7,10 @@ class Pagamento:
 class CartaDiCredito(Pagamento):
     def __init__(self,nome, conto, data, matricola):
         #super().__init__('CartaDiCredito', nome)
-        self.conto = conto
         self.nome = nome
-        self.matricola = matricola
+        self.conto = conto
         self.data = data
+        self.matricola = matricola
     def processa_pagamento(self):
         return f'Elaborazione pagamento con Carta di Credito per {self.nome}'
 
@@ -22,7 +22,7 @@ class PayPal(Pagamento):
         self.email = email
         self.password = password
     def processa_pagamento(self):
-        return f'Elaborazione pagamento con Carta di Credito per {self.email }'
+        return f'Elaborazione pagamento con pay pal per {self.email }'
 
 # Esempio di utilizzo
 def effettua_pagamento(metodo_di_pagamento: Pagamento):

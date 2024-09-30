@@ -1,0 +1,26 @@
+@startuml es6
+
+class Pagamento{
+    + processa_pagamento()
+}
+
+class CartaDiCredito{
+        
+    +nome : str
+    +conto : str
+    +matricola : str
+    +data : str
+    +processa_pagamento(self):
+        
+}
+    
+
+class PayPal{
+    +email : str
+    +password : str
+    +processa_pagamento(self):
+        
+}
+Pagamento <|--CartaDiCredito
+Pagamento <|--PayPal
+@enduml
