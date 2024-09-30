@@ -10,7 +10,6 @@ class CartaDiCredito{
     +conto : str
     +matricola : str
     +data : str
-    +processa_pagamento(self):
         
 }
     
@@ -18,7 +17,6 @@ class CartaDiCredito{
 class PayPal{
     +email : str
     +password : str
-    +processa_pagamento(self):
         
 }
 Pagamento <|--CartaDiCredito
