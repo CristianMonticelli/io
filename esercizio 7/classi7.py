@@ -5,9 +5,13 @@ class MaterialeBiblioteca:
         self.disponibile = True 
 
     def prestito (self):
-        self.disponibile = False
-
+        if self.is_disponibile():
+            self.disponibile = False
+            return True
+        return False
     def restituzione (self):
+        if self.is_disponibile():
+            raise Exception('il libro non e prestato')
         self.disponibile = True
 
     def get_titolo (self):
@@ -16,6 +20,7 @@ class MaterialeBiblioteca:
     def is_disponibile (self):
         return self.disponibile
 
+    @staticmethod
     def ricerca (materiali, titolo):
         oggetti = []
         for materiale in materiali:

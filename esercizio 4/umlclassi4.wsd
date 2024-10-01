@@ -2,13 +2,13 @@
 
 class Calcolatrice{
    
-    + addizione(valore_1, valore_2)
+    - addizione(valore_1, valore_2)
        
-    + sottrazione(valore_1, valore_2)
+    - sottrazione(valore_1, valore_2)
         
         
-    + moltiplicazione(valore_1, valore_2)
+    - moltiplicazione(valore_1, valore_2)
         
-    + divisione(valore_1, valore_2)
+    - divisione(valore_1, valore_2)
 }
 @enduml
