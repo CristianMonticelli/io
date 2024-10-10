@@ -8,7 +8,6 @@ with open('my_list_numeri.json', 'r') as f:
 
 n = my_list_numeri[-1] +1
 my_list_numeri.append(n)
-
 with open('my_list_numeri.json', 'w') as f:
     json.dump(my_list_numeri, f)
 

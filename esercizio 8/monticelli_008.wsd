@@ -1,0 +1,49 @@
+@startuml es8
+class Piatto{
+    +nome : nome
+    +prezzo : prezzo
+    -disponibile : True
+}
+class Antipasto{
+    +ingredienti = ingredienti
+    +porzione = porzione
+}
+class Primo{
+    
+        
+        +tipo_pasta  = tipo_pasta 
+        +sugo = sugo
+    
+    def get_tipo_pasta(self):
+        return self.tipo_pasta
+
+    def get_sugo(self):
+        return self.sugo
+}
+class Secondo{
+    
+       
+        +tipo_carne  = tipo_carne 
+        +cottura = cottura
+    def get_tipo_carne(self):
+        return self.tipo_carne
+
+    def get_cottura(self):
+        return self.cottura
+}
+class Dolce{
+    
+       
+        +tipo_dolce  = tipo_dolce 
+        +calorie = calorie
+    def get_tipo_dolce(self):
+        return self.tipo_dolce
+
+    def get_calorie_piatto(self):
+        return self.calorie
+}
+Piatto<|--Antipasto
+Piatto<|--Primo
+Piatto<|--Secondo
+Piatto<|--Dolce
+@enduml
