@@ -1,0 +1,45 @@
+@startuml es11
+class Ricetta{
+    +nome: str
+    +tempo_preparazione: int
+    +ingredienti: list
+    +difficolta: str
+    +set_nome(nome:str): bool
+    +set_tempo_preparazione(tempo_preparazione): bool
+    +set_ingredienti(ingredienti): bool
+    +set_difficolta(difficolta): bool
+    +get_nome(): str
+    +get_tempo_preparazione(): int
+    +get_ingredienti(): list
+    +get_difficolta(): str
+    +aggiungi_ingrediente(ingrediente): bool
+    
+}
+class Primo{
+    +tipo_pasta:str 
+    +sugo:str
+    +get_tipo_pasta(tipo_pasta): bool
+    +get_sugo(sugo): bool
+    +set_tipo_pasta():str 
+    +set_sugo():str 
+}
+class Secondo{
+    +tipo_carne:str 
+    +cottura:str
+    +get_tipo_carne(tipo_carne): bool
+    +get_cottura(cottura): bool
+    +set_tipo_carne():str 
+    +set_cottura():str 
+}
+class Dolce{
+    +tipo_dolce :str 
+    +zucchero:int
+    +get_tipo_dolce(tipo_dolce): bool
+    +get_zucchero(zucchero): bool
+    +set_tipo_dolce():str 
+    +set_zucchero():list
+}
+Ricetta <|-- Primo
+Ricetta <|-- Secondo
+Ricetta <|-- Dolce
+@enduml

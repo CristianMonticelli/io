@@ -11,13 +11,13 @@ my_list_numeri.append(n)
 with open('my_list_numeri.json', 'w') as f:
     json.dump(my_list_numeri, f)
 
-os.mkdir(f'esercizio {n}')
+os.mkdir(f'esercizio_{n}')
 
-with open(f'esercizio {n}/monticelli_00{str(n)}.py', 'w') as f:
+with open(f'esercizio {n}/monticelli_0{str(n)}.py', 'w') as f:
     f.write('class ___:')
 
-with open(f'esercizio {n}/monticelli_00{str(n)}.wsd', 'w') as f:
+with open(f'esercizio {n}/monticelli_0{str(n)}.wsd', 'w') as f:
     f.write(f'''@startuml es{n}
 
     
-    @enduml''')
+@enduml''')

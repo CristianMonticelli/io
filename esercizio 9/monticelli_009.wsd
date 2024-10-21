@@ -1,0 +1,17 @@
+@startuml es9
+
+class Libro{
+    -_titolo : titolo
+    -_autore : autore
+    -_pagine : pagine
+
+    + titolo (self) -> bool|str
+    + get_autore (self) -> bool|str
+    + get_pagine (self) -> bool|int
+    + set_titolo (self,new_titolo:str) -> bool
+    + set_autore (self,new_autore:str) -> bool
+    + set_pagine (self,new_pagine:int) -> bool
+        
+}
+
+@enduml

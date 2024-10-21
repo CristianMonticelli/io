@@ -1,0 +1,19 @@
+@startuml es10
+
+
+
+class Frazione{
+
+    +numeratore : int
+    +denominatore : int
+    
+    +__add__(self, altro:int) -> int
+
+    +__sub__ (self, altro:int) -> int
+    
+    +__mul__ (self, altro:int) -> int
+
+    +__str__ (self) -> str
+}
+    
+@enduml
