@@ -1,4 +1,4 @@
-from _ex.ex_oop.e10 import Frazione  # type: ignore
+from monticelli_010 import Frazione  # type: ignore
 
 
 def test_addizione():

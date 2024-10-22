@@ -1,4 +1,4 @@
-from _ex.ex_oop.e08 import Antipasto, Primo, Secondo, Dolce, calcola_conto, stampa_menu  # type: ignore
+from monticelli_008 import Antipasto, Primo, Secondo, Dolce, calcola_conto, stampa_menu  # type: ignore
 
 
 def test_antipasto():

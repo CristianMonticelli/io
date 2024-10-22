@@ -1,4 +1,4 @@
-from _ex.ex_oop.e07 import MaterialeBiblioteca, Libro, Rivista, DVD  # type: ignore
+from classi7 import MaterialeBiblioteca, Libro, Rivista, DVD  # type: ignore
 
 
 def test_materiale_biblioteca():

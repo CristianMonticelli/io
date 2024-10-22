@@ -1,4 +1,4 @@
-from _ex.ex_oop.e09 import Libro  # type: ignore
+from monticelli_009 import Libro  # type: ignore
 
 
 def test_libro_getter_setter():

@@ -1,7 +1,7 @@
 # ruff: noqa: F841
 
 import pytest
-from _ex.ex_oop.e03 import Veicolo  # type: ignore
+from classi3 import Veicolo  # type: ignore
 
 
 @pytest.fixture(autouse=True)

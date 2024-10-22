@@ -7,7 +7,9 @@ class ContoBancario:
     def get_saldo(self):
         return self.__saldo  
     def deposita(self, euro):
-        self.__saldo = self.__saldo+euro
+        if euro>0:
+            self.__saldo = self.__saldo+euro
+
     def preleva(self, euro):
         self.__saldo = self.__saldo-euro
 

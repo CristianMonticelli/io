@@ -1,4 +1,4 @@
-from _ex.ex_oop.e06 import CartaDiCredito, PayPal, effettua_pagamento  # type: ignore
+from classi6 import CartaDiCredito, PayPal, effettua_pagamento  # type: ignore
 
 
 def test_carta_di_credito_processa_pagamento(capfd):

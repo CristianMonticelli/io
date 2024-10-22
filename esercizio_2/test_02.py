@@ -5,7 +5,7 @@
 # pylint: disable=redefined-outer-name
 
 import pytest
-from _ex.ex_oop.e02 import ContoBancario  # type: ignore
+from classi2 import ContoBancario  # type: ignore
 
 
 @pytest.fixture
