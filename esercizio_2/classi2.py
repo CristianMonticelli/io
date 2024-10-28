@@ -11,7 +11,8 @@ class ContoBancario:
             self.__saldo = self.__saldo+euro
 
     def preleva(self, euro):
-        self.__saldo = self.__saldo-euro
+        if euro<=self.__saldo:
+            self.__saldo = self.__saldo-euro
 
 # Esempio di utilizzo
 conto = ContoBancario("123456789", "Mario Rossi", 1000.0)

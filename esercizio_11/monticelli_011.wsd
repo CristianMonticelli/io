@@ -42,4 +42,4 @@ class Dolce{
 Ricetta <|-- Primo
 Ricetta <|-- Secondo
 Ricetta <|-- Dolce
-@enduml
+@endumlclass 
