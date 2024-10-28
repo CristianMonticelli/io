@@ -1,6 +1,5 @@
 import os
 
-
 n = 1
 while True:
     if os.path.exists(f'esercizio_{n}'):

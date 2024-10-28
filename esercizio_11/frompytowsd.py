@@ -22,17 +22,33 @@ for riga in righe:
                 testo_modificato =testo_modificato.replace('()', "").strip()
             
 
-        contenuto += f'{testo_modificato}'+'{'
+        contenuto += f'{testo_modificato}'+'''{
+            '''
 
     if 'def __init__(' in riga:
         testo_modificato = riga.replace("def __init__", "").strip()
         testo_modificato = testo_modificato.replace('self,', "").strip()
         testo_modificato = testo_modificato.replace('):', "").strip()
+        testo_modificato = testo_modificato.replace(',', '''
+        ''').strip()
+        contenuto += f'{testo_modificato}'+'''
+        '''
+
+    if 'def' in riga:
+        testo_modificato = riga.replace(":", "").strip()
+        testo_modificato = testo_modificato.replace("def ", "+").strip()
+        if 'self' in testo_modificato:
+            testo_modificato = testo_modificato.replace("self,", "").strip()
+        if '->' in testo_modificato:
+            testo_modificato = testo_modificato.replace(" ->", ":").strip()
+        contenuto += f'{testo_modificato}'+'''
+        '''
+
 
 #for riga in righe:
 #    print(riga.strip())
 
-with open(f'monticelli_011.wsd', 'a') as f:
+with open(f'monticelli_011.wsd copy', 'a') as f:
     f.write(contenuto)
     
 
