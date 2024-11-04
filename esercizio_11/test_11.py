@@ -43,7 +43,7 @@ def test_dolce_attributes():
     dolce = Dolce(
         "Tiramisù", 30, ["Mascarpone", "Caffè", "Savoiardi"], "Media", 200, "Dessert"
     )
-    assert dolce.zucchero == 200
+    assert dolce.calorie == 200
     assert dolce.tipo_dolce == "Dessert"
 
 
