@@ -2,6 +2,7 @@ class Auto:
     def __init__(self,marca,modello ):
         self._marca  = marca 
         self._modello = modello
+        self.motore = None
     @property
     def marca(self):
         return self._marca
@@ -14,11 +15,18 @@ class Auto:
     @modello.setter
     def modello(self,new_modello):
         self._modello = new_modello
+    def associa_motore(self, motore):
+        self.motore = motore
+        motore.associa_auto(self)
+    
+
     
 class Motore:
     def __init__(self,numero_seriale ,tipo ):
         self._numero_seriale  = numero_seriale 
         self._tipo = tipo       
+        self.auto = None
+
     @property
     def numero_seriale(self):
         return self._numero_seriale
@@ -31,10 +39,16 @@ class Motore:
     @tipo.setter
     def tipo(self,new_tipo):
         self._tipo= new_tipo
+   
+    
+    def associa_auto(self, auto):
+        self.auto = auto
+
 
 # Creazione delle istanze
 auto1 = Auto("Fiat", "500")
 motore1 = Motore("ENG123456", "Benzina")
+motore2 = Motore("ENG654321", "Diesel")
 
 # Associazione tra auto e motore
 auto1.associa_motore(motore1)
