@@ -16,8 +16,15 @@ class Auto:
     def modello(self,new_modello):
         self._modello = new_modello
     def associa_motore(self, motore):
-        self.motore = motore
-        motore.associa_auto(self)
+        # controllo se l'auto ha gia un motore associato
+        # e se si lo rimuovo
+        # e aggiungo il motore nuovo
+        if self.motore != None:
+            self.motore.associa_auto(None) # rimuovo il riferimento all'auto nel motore corrente
+        self.motore = motore # associo il nuovo motore all'auto
+        motore.associa_auto(self) # associo l'auto al nuovo motore
+        
+        
     
 
     
@@ -56,3 +63,9 @@ auto1.associa_motore(motore1)
 # Verifica dell'associazione
 print(f"{auto1.marca} {auto1.modello} ha il motore: {auto1.motore.numero_seriale}")
 print(f"Il motore {motore1.numero_seriale} appartiene a: {motore1.auto.marca} {motore1.auto.modello}")
+
+# cambio il motore dell'auto
+auto1.associa_motore(motore2)
+
+# Verifica dell'associazione
+print(f"{auto1.marca} {auto1.modello} ha il motore: {auto1.motore.numero_seriale}")

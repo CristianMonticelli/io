@@ -17,6 +17,11 @@ class Casa:
     def proprietario(self,new_proprietario):
         self._proprietario= new_proprietario
 
+    def stampa_stanze(self):
+        for stanza in self.stanze:
+            print(f'{stanza.nome} ({stanza.superficie} mq)')
+        
+
     def aggiungi_stanza(self,stanza):
         
         self.stanze.append(stanza)

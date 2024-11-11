@@ -4,9 +4,12 @@ class Studente:
         self._nome=nome
         self._matricola = matricola
         self.corsi = []
+
     def aggiungi_corso(self,corso):
-        self.corsi.append(corso)
-        corso.aggiungi_studente(self)
+        
+        if corso not in self.corsi:
+            self.corsi.append(corso)
+            corso.aggiungi_studente(self)
 
     @property
     def nome(self):
@@ -42,7 +45,10 @@ class Corso:
 
     def aggiungi_studente(self,studente):
         
-        self.studenti.append(studente)
+        
+        if studente not in self.studenti:
+            self.studenti.append(studente)
+            studente.aggiungi_corso(self)
 
 # Creazione delle istanze di Studente
 studente1 = Studente("Alice Rossi", "MAT123")
