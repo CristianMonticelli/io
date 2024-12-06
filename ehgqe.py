@@ -14,9 +14,10 @@ os.mkdir(f'esercizio_{n}')
 with open(f'esercizio_{n}/monticelli_0{str(n)}.py', 'w') as f:
     f.write('class ___:')
 
-with open(f'esercizio_{n}/monticelli_0{str(n)}.wsd', 'w') as f:
-    f.write(f'''@startuml es{n}
+with open(f'esercizio_{n}/monticelli_0{str(n)}.md', 'w') as f:
+    f.write(f'''```mermaid
+classDiagram
 
     
-@enduml''')
+```''')
 
