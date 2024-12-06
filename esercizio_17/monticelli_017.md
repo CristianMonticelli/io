@@ -1,6 +1,6 @@
 ```mermaid
 classDiagram
-    class Insegante {
+    class Insegnante {
         -nome : string
         -cognome : string
         -strumento : string
@@ -21,11 +21,8 @@ classDiagram
 
     
 
-    Insegante "1" --> "n" Studente : insegna
+    Insegnante "1" --> "n" Studente : insegna
     Studente "n" --> "n" Corso : iscritti
 
     
-
-
-
 ```

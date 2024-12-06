@@ -77,10 +77,10 @@ class Membro(Persona):
         
     
 class Corso:
-    def __init__ (self, nome, durata):  
+    def __init__ (self, nome, durata, allenatore):  
         self._nome = nome
         self._durata = durata
-        self.allenatore = None
+        self._allenatore = allenatore
         self.membri = []
     @property
     def nome(self):

@@ -38,18 +38,18 @@ class Studente:
         self._nome=nome
         self._cognome = cognome
         self.corsi = []
-        self.insegnanti = []
+        self.insegnanti = None
 
     def iscrivi_corso(self,corso):
-        
         if corso not in self.corsi:
             self.corsi.append(corso)
             corso.aggiungi_studente(self)
-
+    
     def set_insegnante(self,insegnante):
-        if insegnante not in self.insegnanti:
-            self.insegnanti.append(insegnante)
-            insegnante.aggiungi_studente(self)
+            if insegnante == None:
+                self.insegnante = insegnante
+                insegnante.aggiungi_studente(self)
+
 
     @property
     def nome(self):
