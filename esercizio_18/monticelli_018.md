@@ -22,8 +22,8 @@ classDiagram
     Membri "n" --> "n" Corsi : iscritti
     Allenatori "1" --> "n" Corsi : tiene
     Membri "1" --> "1" Scheda_allenamento : possiede
-    Persona --|> Allenatori 
-    Persona --|> Membri 
+    Allenatori --|> Persona
+    Membri --|> Persona
 
     
 ```
