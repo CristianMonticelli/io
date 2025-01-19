@@ -1,13 +1,13 @@
 ```mermaid
 classDiagram
     class Autonoleggio{
-        +list[Automobile] automobili
-        +list[Noleggi]
+        +str nome
         
-        -list[Automobile] Aggiungere_automobili
-        -bool Noleggia_auto
-        -list[Automobile] Visualizzare_automobili_disponibili
-        -list[Noleggi] Visualizzare_noleggi
+        
+        -list[Automobile] aggiungere_automobile
+        -bool noleggia_auto
+        -list[Automobile] automobili_disponibili
+        -list[Noleggi] noleggi_effettuati
 
     }
 
@@ -16,14 +16,16 @@ classDiagram
         +Automobile
         +date inizio
         +date fine_noleggio
+        
 
     }
 
-    class Automobile{
+    class Auto{
         +int numero_targa
         +str modello
         +str categoria
         +bool disponibilità
+        -bool auto_noleggiata
          
     }
     Autonoleggio "1" -- "n*" Noleggio : esegue
