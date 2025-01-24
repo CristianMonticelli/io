@@ -5,6 +5,10 @@ classDiagram
             +str email
             +str password
             +str profilo
+            -crea_album(album)
+            -segui_utenti(utente)
+            -caricare_foto(foto)
+            -inserisci_foto_in_album(album,foto)
 
         }
     
@@ -16,6 +20,7 @@ classDiagram
             +Utente utente
             +Album album
             +list[Commento] commenti
+            -postata(data_caricamento,utente)
         }
     
     class Album{
@@ -23,11 +28,13 @@ classDiagram
             +str descrizione
             +Utente utente
             +list[Foto] foto
+            -aggiungi_foto(foto)
         }
     
     class Commento{
             +str commento
             +Utente autore
+            -assegna_commento(foto)
     }
     
     Utente "1" -- "n*" Foto : Carica
