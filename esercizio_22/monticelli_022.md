@@ -2,17 +2,16 @@
 classDiagram
     class Autonoleggio{
         +str nome
-        
-        
-        -list[Automobile] aggiungere_automobile
-        -bool noleggia_auto
-        -list[Automobile] automobili_disponibili
-        -list[Noleggi] noleggi_effettuati
+        +automobili: list[Auto]
+        +noleggi: list[Noleggio]
+        +aggiungere_automobile(Auto): bool
+        +noleggia_auto(str targa): Auto | None
+        +automobili_disponibili(): list[Auto]
+        +noleggi_effettuati(): list[Noleggio]
 
     }
 
     class Noleggio{
-        +Autonoleggio
         +Automobile
         +date inizio
         +date fine_noleggio
@@ -25,12 +24,13 @@ classDiagram
         +str modello
         +str categoria
         +bool disponibilità
-        -bool auto_noleggiata
+        +auto_noleggiata()
+        +auto_restituita()
          
     }
-    Autonoleggio "1" -- "n*" Noleggio : esegue
-    Autonoleggio "1" -- "n*" Automobile : possiede
-    Noleggio "n*" -- "1" Automobile : si riferisce
+    Autonoleggio "1" --> "n*" Noleggio : esegue
+    Autonoleggio "1" --> "n*" Auto : possiede
+    Noleggio "n*" --> "1" Auto : si riferisce
 
 
     
