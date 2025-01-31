@@ -24,10 +24,15 @@ class Auto(Veicolo):
     def __init__(self,marca,targa,modello,tipo_carburante,cavalli):
         super().__init__(marca,targa,modello,tipo_carburante)
         self.cavalli = cavalli
+    def __str__(self):
+        return f'marca:{self.marca} targa:{self.targa} modello:{self.modello} tipo carburante:{self.tipo_carburante} cavalli{self.cavalli}CV'
+      
 class Camion(Veicolo):
     def __init__(self,marca,targa,modello,tipo_carburante,portata):
         super().__init__(marca,targa,modello,tipo_carburante)
         self.portata = portata
+    def __str__(self):
+        return f'marca:{self.marca} targa:{self.targa} modello:{self.modello} tipo carburante:{self.tipo_carburante} portata{self.portata}Kg'
         
 class Flotta:
     def __init__(self,nome):
@@ -69,4 +74,5 @@ print(flotta.aggiungi_veicoli(auto1))
 print(flotta.aggiungi_veicoli(auto2))
 print(flotta.aggiungi_veicoli(auto3))
 print(flotta.aggiungi_veicoli(camion))
+flotta.visualizzare_informazioni()
 

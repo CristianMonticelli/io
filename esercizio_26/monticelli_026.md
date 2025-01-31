@@ -2,6 +2,7 @@
 classDiagram
     class Veicolo{
         +marca: str
+        +targa: str
         +modello: str
         +tipo_carburante: str
     }
