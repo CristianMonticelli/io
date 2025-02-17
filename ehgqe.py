@@ -17,7 +17,7 @@ with open(f'esercizio_{n}/monticelli_0{str(n)}.py', 'w') as f:
 with open(f'esercizio_{n}/monticelli_0{str(n)}.md', 'w') as f:
     f.write(f'''```mermaid
 classDiagram
-
-    
 ```''')
+with open(f'esercizio_{n}/monticelli_0{str(n)}.md', 'w') as f:
+    f.write(f'')
 

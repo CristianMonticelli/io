@@ -14,30 +14,34 @@
 #3. La classe `Flotta` deve gestire una lista di veicoli, 
 # permettere l’aggiunta di nuovi veicoli, e la visualizzazione 
 # delle informazioni di tutti i veicoli.
+
 class Veicolo:
     def __init__(self,marca,targa,modello,tipo_carburante):
-        self.marca = marca
-        self.targa = targa
-        self.modello = modello
-        self.tipo_carburante = tipo_carburante
+        self.marca: str = marca
+        self.targa: str = targa
+        self.modello: str = modello
+        self.tipo_carburante: str = tipo_carburante
+    def __str__(self):
+        return f'marca:{self.marca} targa:{self.targa} modello:{self.modello} tipo carburante:{self.tipo_carburante} '
+
 class Auto(Veicolo):
     def __init__(self,marca,targa,modello,tipo_carburante,cavalli):
         super().__init__(marca,targa,modello,tipo_carburante)
-        self.cavalli = cavalli
+        self.cavalli: int = cavalli
     def __str__(self):
-        return f'marca:{self.marca} targa:{self.targa} modello:{self.modello} tipo carburante:{self.tipo_carburante} cavalli{self.cavalli}CV'
+        return f'{super.__str__()} cavalli{self.cavalli}CV'
       
 class Camion(Veicolo):
     def __init__(self,marca,targa,modello,tipo_carburante,portata):
         super().__init__(marca,targa,modello,tipo_carburante)
-        self.portata = portata
+        self.portata: int = portata
     def __str__(self):
-        return f'marca:{self.marca} targa:{self.targa} modello:{self.modello} tipo carburante:{self.tipo_carburante} portata{self.portata}Kg'
+        return f'{super.__str__()} portata{self.portata}Kg'
         
 class Flotta:
     def __init__(self,nome):
-        self.nome = nome
-        self.veicoli = []
+        self.nome: str = nome
+        self.veicoli: list[Veicolo] = []
     def aggiungi_veicoli(self,nuovo_veicolo):
         problemi = {"aggiunto":False,
                     "targa_gia_presente":False,

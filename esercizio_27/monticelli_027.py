@@ -40,8 +40,6 @@ class SistemaPrenotazioni:
             return True
         return False
     
-
-        
     def aggiungi_prenotazioni(self,prenotazione,volo):
         problemi = {"prenotazione riuscita":False,
             'prenotazione gia esistente':False,

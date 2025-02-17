@@ -14,12 +14,12 @@ classDiagram
     }
     class Flotta{
         +veicoli: list[Veicolo]
-        +aggiungi_veicoli(Veicolo): dict{bool}
+        +aggiungi_veicoli(Veicolo): dict(bool)
         +visualizzare_informazioni(): void
     }
     Auto --|> Veicolo
     Camion --|> Veicolo
-    Flotta "1" --> "n*" Veicolo : gestisce
+    Flotta "1" --> "*" Veicolo : gestisce
 
     
 ```

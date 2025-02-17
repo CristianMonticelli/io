@@ -23,7 +23,7 @@ classDiagram
     
     }
     SistemaPrenotazioni"1" -- "n*" Prenotazione : fa
-    Prenotazione"1" -- "n*" Volo : fa
+    Prenotazione"n*" -- "1" Volo : di
 
     
 ```
