@@ -20,23 +20,21 @@ classDiagram
         +descrizione: str
         +docente: str
         +studenti: list[Studente]
-        +quiz: Quiz
+        +domande: list[Domanda]
         +valutazione() float
         
     }
  
     
-    class Quiz{
-        +domande: list[Domanda]
-    }
-    Corso "1" --> "1" Quiz : possiede
+    
+    Corso "1" --> "*" Domanda : comprende
     class Studente{
         +nome: str
         +corsi: list[Corso]
         +tentativiQuiz: list[tentativoQuiz]
         
     }
-    %%Studente "1" --> "*" Quiz : risolvono?
+    
     Studente "*" --> "*" Corso : partecipa
 
 
@@ -48,16 +46,16 @@ classDiagram
         +opzioniPossibili : list[str]
         +rispostaCorretta : str
     }
-    Quiz "1" --> "*" Domanda : comprende
+    
     class TentativoQuiz{
-        +risposteDate : list[Risposta]
+        +risposteDate : Risposta
         +studente: Studente
-        +quiz: Quiz 
+        
     }
-    TentativoQuiz --> Risposta
-    TentativoQuiz --> Quiz
-    Studente --> TentativoQuiz
-    Risposta --> Domanda
+    TentativoQuiz "1" --> "*" Risposta : comprende
+    TentativoQuiz "1" --> "1" Corso : fatto su
+    Studente "1" --> "*" TentativoQuiz : fa
+    Risposta "1" --> "1" Domanda : correlata
 
     class Risposta{
         +domanda: Domanda
