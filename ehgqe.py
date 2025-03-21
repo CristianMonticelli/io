@@ -19,5 +19,9 @@ with open(f'esercizio_{n}/monticelli_0{str(n)}.md', 'w') as f:
 classDiagram
 ```''')
 with open(f'esercizio_{n}/monticelli_0{str(n)}.md', 'w') as f:
-    f.write(f'')
+    f.write(f'''```mermaid
+classDiagram
+    class 
+    
+```''')
 
