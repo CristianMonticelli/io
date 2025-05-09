@@ -20,6 +20,31 @@ class Utente:
         progetto = ProgettoMusicale(id, titolo, datetime.datetime.now, genere)
         self.progetti.append(progetto)
         print(self.progetti)
+        
+    
+    def conta_progetti_totali(self):
+        print(len(self.progetti))
+        #return len(self.progetti)
+    
+    def strumento_piu_usato(self):
+        progetti_per_genere = self.progetti_per_genere()
+        strumento_piu_usato = None
+        for p in progetti_per_genere:
+            if strumento_piu_usato == None:
+                strumento_piu_usato= progetti_per_genere[p]
+            
+            if len(strumento_piu_usato) < len(progetti_per_genere[p]):
+                strumento_piu_usato = progetti_per_genere[p]
+            
+    def progetti_per_genere(self):
+        progetti_per_genere = {}
+        for p in self.progetti:
+            if p.genere_musicale in progetti_per_genere:
+                progetti_per_genere[p.genere_musicale].append(p)
+            else:
+                progetti_per_genere[p.genere_musicale] = [p]
+        print(progetti_per_genere)
+        #return progetti_per_genere
     
 class ProgettoMusicale:
     def __init__(self, id_progetto, titolo_progetto, data_creazione, genere_musicale):
@@ -80,7 +105,7 @@ class StrumentoVirtuale:
         self.nome = nome_strumento
         self.tipo_strumento_virtuale = tipo_strumento_virtuale
     
-    def suona_nota(nota, durata):
+    def suona_nota(self, nota, durata):
         while durata>0:
             durata-=1
             print(nota)
@@ -96,4 +121,8 @@ utente.crea_progetto('ciao', 'lirico')
 utente.progetti[0].aggiungi_traccia('ciao', 40, 34)
 
 strumento = StrumentoVirtuale('6784', 'chitarra', 'elettrica')
-strumento.suona_nota('do',2)
+strumento.suona_nota('do', 2)
+
+utente.progetti_per_genere()
+utente.conta_progetti_totali()
+utente.strumento_piu_usato()
