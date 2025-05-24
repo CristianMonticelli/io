@@ -68,21 +68,12 @@ classDiagram
 
     
 
-    class Canale{
-        +nome: str
-        +proprietrio: Utente
-        +followers: list[Utente]
-        +videoPubblicati: list[Video]
     
-    }
     Playlist "*" --> "*" Video : contiene
     Utente "1" --> "*" Playlist : crea
     Utente "1" --> "1" Abbonamento : effettua
     Utente "1" --> "*" Commento : scrive
     Commento "*" --> "1" Video : sotto
-    Utente "1" --> "1" Canale : crea
-    Utente "*" <-- "*" Canale : seguito
-    Video "1" <-- "1" Canale : pubblica
     Utente "*" --> "*" Video : vede
 
     %% class Piattaforma{
