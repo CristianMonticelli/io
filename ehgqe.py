@@ -11,17 +11,20 @@ while True:
 
 os.mkdir(f'esercizio_{n}')
 
-with open(f'esercizio_{n}/monticelli_0{str(n)}.py', 'w') as f:
-    f.write('class ___:')
+# with open(f'esercizio_{n}/monticelli_0{str(n)}.py', 'w') as f:
+#     f.write('class ___:')
 
 with open(f'esercizio_{n}/monticelli_0{str(n)}.md', 'w') as f:
     f.write(f'''```mermaid
-classDiagram
+erDiagram
+
+
 ```''')
-with open(f'esercizio_{n}/monticelli_0{str(n)}.md', 'w') as f:
-    f.write(f'''```mermaid
-classDiagram
-    class 
     
-```''')
+# with open(f'esercizio_{n}/monticelli_0{str(n)}.md', 'w') as f:
+#     f.write(f'''```mermaid
+# classDiagram
+#     class 
+    
+# ```''')
 
