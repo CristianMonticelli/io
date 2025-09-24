@@ -20,6 +20,13 @@ erDiagram
 
 
 ```''')
+
+with open(f'esercizio_{n}/monticelli_0{str(n)}.sql', 'w') as f:
+    f.write(f'''
+            CREATE TABLE X (
+);
+
+''')
     
 # with open(f'esercizio_{n}/monticelli_0{str(n)}.md', 'w') as f:
 #     f.write(f'''```mermaid
@@ -27,4 +34,3 @@ erDiagram
 #     class 
     
 # ```''')
-

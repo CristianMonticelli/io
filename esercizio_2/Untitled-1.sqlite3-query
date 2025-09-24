@@ -1,10 +1,12 @@
+-- database: ./esempio.db
+
 
 -- 1. Creare le tabelle del modello ER
 
 CREATE TABLE TIPOLOGY (
     id INT PRIMARY KEY,
     Nome VARCHAR(50) NOT NULL,
-    descrizione VARCHAR(50),
+    descrizione VARCHAR(50)
   
 );
 
@@ -19,7 +21,7 @@ CREATE TABLE  MIELE (
 
 CREATE TABLE APICOLTORE (
     id INT PRIMARY KEY,
-    Nome VARCHAR(50) NOT NULL,
+    Nome VARCHAR(50) NOT NULL
   
 );
 
@@ -81,7 +83,7 @@ VALUES (1, 2023, 200, 1, 'A001'),
 
 -- Seleziona tutti gli apicoltori.       
 SELECT *
-FROM APICOLTORE
+FROM APICOLTORE;
 
 -- Seleziona l'apicoltore con id 1.
 SELECT id, Nome
