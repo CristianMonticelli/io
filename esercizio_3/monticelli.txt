@@ -1,0 +1,50 @@
+SELECT *
+FROM Apiary
+ORDER BY region ASC, province DESC
+
+conta quanti apiari ci sono per ogni regione
+SELECT region, COUNT(*) AS n_apiari
+FROM Apiary
+GROUP BY region
+
+SELECT COUNT(*)
+FROM Honey;
+
+SELECT ,COUNT(*)
+FROM Honey
+GROUP BY typology_id
+
+
+SELECT typology_id, COUNT(*)
+FROM Honey
+GROUP BY typology_id;
+
+SELECT *
+FROM Honey
+JOIN Typology
+ON Honey.typology_id = typology_id;
+
+SELECT Honey.denomination, Typology.typology_name
+FROM Honey
+JOIN Typology
+ON Honey.typology_id = typology_id;
+
+SELECT H.denomination, T.typology_name
+FROM Honey AS H
+JOIN Typology AS T
+ON H.typology_id = T.id;
+
+SELECT *
+FROM Honey AS H
+JOIN Typology AS T
+ON H.typology_id = T.id;
+
+SELECT T.typology_name, COUNT(*)
+FROM Honey AS H
+JOIN Typology AS T
+ON H.typology_id = T.id
+GROUP BY H.typology_id;
+
+SELECT region, COUNT(*) AS n_apiari
+FROM Apiary
+GROUP BY region

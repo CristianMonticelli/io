@@ -11,8 +11,8 @@ while True:
 
 os.mkdir(f'esercizio_{n}')
 
-# with open(f'esercizio_{n}/monticelli_0{str(n)}.py', 'w') as f:
-#     f.write('class ___:')
+with open(f'esercizio_{n}/monticelli_0{str(n)}.py', 'w') as f:
+    f.write('class ___:')
 
 with open(f'esercizio_{n}/monticelli_0{str(n)}.md', 'w') as f:
     f.write(f'''```mermaid
@@ -20,6 +20,14 @@ erDiagram
 
 
 ```''')
+    
+with open(f'esercizio_{n}/monticelli_0{str(n)}.db', 'w') as f:
+    f.write(f'''
+            ''')
+
+with open(f'esercizio_{n}/monticelli_0{str(n)}.txt', 'w') as f:
+    f.write(f'''
+            ''')
 
 with open(f'esercizio_{n}/monticelli_0{str(n)}.sql', 'w') as f:
     f.write(f'''
