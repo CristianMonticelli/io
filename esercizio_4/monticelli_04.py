@@ -64,8 +64,8 @@ try:
     cursor.execute("""
         SELECT Matricola, Corso, Voto
         FROM Esami
-        WHERE Matricola = 101
-    """)
+        WHERE Matricola = ?
+    """,(101,))
     studenti = cursor.fetchall()
     print("\nElenco dei corsi e voti sostenuti da uno studente specifico (usa la matricola 101 come esempio):")
     for studente in studenti:
