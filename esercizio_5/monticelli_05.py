@@ -79,6 +79,7 @@ def query_prestiti_per_utente(utente: str):
     cursor.execute("""
         SELECT P.utente ,L.titolo, P.data_prestito, P.data_restituzione
         FROM PRESTITI AS P
+        
         JOIN LIBRI AS L
         ON P.libro_id = L.ID
         WHERE P.utente = ?
