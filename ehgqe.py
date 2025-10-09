@@ -12,7 +12,13 @@ while True:
 os.mkdir(f'esercizio_{n}')
 
 with open(f'esercizio_{n}/monticelli_0{str(n)}.py', 'w') as f:
-    f.write('class ___:')
+    f.write('''import sqlite3
+from typing import List, Tuple
+import db_utils
+#Connessione: crea il file 'K.db' se non esiste
+conn: sqlite3.Connection = sqlite3.connect('K.db')
+#Creazione Cursore
+cursor: sqlite3.Cursor = conn.cursor()''')
 
 with open(f'esercizio_{n}/monticelli_0{str(n)}.md', 'w') as f:
     f.write(f'''```mermaid

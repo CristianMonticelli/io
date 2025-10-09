@@ -1,5 +1,6 @@
 import sqlite3
 from typing import List, Tuple
+import db_utils
 #Connessione: crea il file 'libreria.db' se non esiste
 conn: sqlite3.Connection = sqlite3.connect('libreria.db')
 #Creazione Cursore
@@ -72,11 +73,8 @@ def query_libri_per_autore(autore_id: int):
         WHERE A.ID = ?
 
     """,(autore_id,))
+    show_fetched_data(cursor.fetchall())
     
-    X = cursor.fetchall()
-    for Y in X:
-        print(Y)
-        
 def query_prestiti_per_utente(utente: str):
     cursor.execute("""
         SELECT P.utente ,L.titolo, P.data_prestito, P.data_restituzione
@@ -86,23 +84,38 @@ def query_prestiti_per_utente(utente: str):
         WHERE P.utente = ?
 """,(utente,))
     
-    X = cursor.fetchall()
-    for Y in X:
-        print(Y)
+    db_utils.show_fetched_data(cursor.fetchall())
         
 def query_libri_per_genere():
     cursor.execute("""
-        SELECT L.genere, L.titolo
+        SELECT L.genere, count(?) AS NUMERO_LIBRI
         FROM LIBRI AS L
-        GROUP BY GIALLO!!!!!
-""")
-    X = cursor.fetchall()
-    for Y in X:
-        print(Y)
+        GROUP BY L.genere
+""",('Giallo',))
+    
+    db_utils.show_fetched_data(cursor.fetchall())
+
 def query_autori_con_piu_libri():
-    pass
+    cursor.execute("""
+        SELECT A.nome, A.cognome, count(L.autore_id) AS NUMERO_LIBRI
+        FROM AUTORI AS A
+        JOIN LIBRI AS L
+        ON A.ID = L.autore_id
+        GROUP BY A.ID
+        ORDER BY NUMERO_LIBRI DESC
+""")
+    db_utils.show_fetched_data(cursor.fetchall())
+
 def query_prestiti_non_restituiti():
-    pass
+    cursor.execute("""
+        SELECT P.utente ,L.titolo, P.data_prestito
+        FROM PRESTITI AS P
+        JOIN LIBRI AS L
+        ON P.libro_id = L.ID
+        WHERE P.data_restituzione = 'NULL'
+""")
+    
+    db_utils.show_fetched_data(cursor.fetchall())
 
 try:
     # Inizializzazione del database
@@ -111,9 +124,16 @@ try:
     
     # Conferma delle modifiche
     conn.commit()
-    
+    print("Restituisce tutti i libri di un autore specifico (usa JOIN).")
     query_libri_per_autore(1)
+    print("Restituisce i prestiti di un utente (usa JOIN).")
     query_prestiti_per_utente('Mario Rossi')
+    print("Restituisce il numero di libri per genere (usa GROUP BY). Assicurati di avere almeno un genere con due libri")
+    query_libri_per_genere()
+    print("Restituisce gli autori ordinati per numero di libri (usa JOIN, GROUP BY, ORDER BY).")
+    query_autori_con_piu_libri()
+    print(" Restituisce i prestiti non ancora restituiti (data_restituzione IS NULL).")
+    query_prestiti_non_restituiti()
 
 finally:
     # Chiusura Connessione
