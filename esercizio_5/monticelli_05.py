@@ -73,7 +73,7 @@ def query_libri_per_autore(autore_id: int):
         WHERE A.ID = ?
 
     """,(autore_id,))
-    show_fetched_data(cursor.fetchall())
+    db_utils.show_fetched_data(cursor.fetchall())
     
 def query_prestiti_per_utente(utente: str):
     cursor.execute("""
