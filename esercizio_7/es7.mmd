@@ -1,0 +1,55 @@
+erDiagram
+    azienda_vinicola {
+        string partitaIva PK
+        string nome
+        string via
+        string numeroCivico
+        string comune
+        string provincia
+        string regione
+        int list[vigneto] FK
+    }
+    vigneto {
+        int id PK
+        string nome
+        int superficie_totale
+        string località
+        string comune
+        string classe_esposizione
+        int numero_filari
+        int list[parcella] FK
+}
+
+    vitigno {
+        ind id PK
+        string nome_scientifico
+        string nome_comune
+        string colore_bacca
+        string origine_genetica
+        float percentuale_bosco
+    }
+
+    parcella {
+        int id PK
+        int superficie
+        string classe_esposizione
+        int id_vigneto FK
+        int list[vitigno] FK
+    }
+
+    etichetta {
+        int id PK
+        string nome
+        int annata
+        string tipologia
+        string partitaIva FK
+        int id_vigneto FK
+        int id_vitigno FK
+    }
+    azienda_vinicola ||--o{ vigneto: possiede
+    azienda_vinicola ||--o{ etichetta: produce
+    vigneto ||--o{ etichetta: proviene_da
+    vitigno ||--o{ etichetta: associata_a
+    vigneto ||--o{ parcella: suddiviso_in
+    parcella ||--o{ vitigno: piantato_in
+    
