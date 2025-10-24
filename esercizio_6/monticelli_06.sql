@@ -30,7 +30,7 @@ SELECT L.titolo, P.utente, P.data_restituzione
 FROM PRESTITI AS P
 JOIN LIBRI AS L
 ON P.libro_id = L.id
-WHERE P.data_restituzione IS NOT "NULL";
+WHERE P.data_restituzione IS NOT NULL;
 
 --7. Autori e numero di libri, inclusi quelli senza libri (usa [LEFT JOIN](https://www.w3schools.com/sql/sql_join_left.asp) e GROUP BY).
 SELECT A.nome, A.cognome, COUNT(L.id) AS numero_libri
