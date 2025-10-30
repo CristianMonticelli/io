@@ -151,3 +151,50 @@ JOIN Artisti AS AR
 ON AL.artista_id = AR.id
 GROUP BY AL.artista_id
 -- Risultato atteso: Vasco Rossi con 4 album, Lucio Battisti con 3, etc.
+
+-- QUERY 4: Query annidata (subquery)
+-- Trovare tutti gli album il cui prezzo è superiore alla media dei prezzi degli album di tutti gli artisti
+
+-- 1. media dei prezzi degli album di tutti gli artisti
+SELECT AVG(AV.prezzo) AS prezzo_medio
+FROM AlbumVirtuale AV;
+-- 16.22
+
+-- 2. Trovare tutti gli album il cui prezzo è superiore a 16.22
+SELECT AV.titolo, AV.prezzo
+FROM AlbumVirtuale AV
+WHERE AV.prezzo > 16.22;
+
+-- Trovare tutti gli album il cui prezzo è superiore alla media dei prezzi degli album di tutti gli artisti
+SELECT AV.titolo, AV.prezzo
+FROM AlbumVirtuale AV
+WHERE AV.prezzo > 
+    (SELECT AVG(AV.prezzo) AS prezzo_medio
+    FROM AlbumVirtuale AV);
+
+
+-- QUERY 5: Join con aggregazione
+-- Calcolare il totale delle vendite per ogni artista
+SELECT AR.nome, AR.cognome, AV.titolo, sum(RS.quantita*AV.prezzo_unitario) AS p_tot
+FROM RigheScontrino AS RS
+JOIN AlbumVirtuale AS AV
+ON AV.codice = RS.album_id
+JOIN Artisti AS AR
+ON AR.id = AV.artista_id
+GROUP BY AR.id;
+
+-- QUERY 6: Query con wildcards (LIKE)
+-- Trovare album con 'a' nel titolo
+SELECT * 
+FROM AlbumVirtuale AS AV
+WHERE AV.titolo LIKE 'a%';
+
+-- QUERY 7: LEFT JOIN con aggregazione
+-- Elencare tutti gli artisti e il numero di album venduti (incluso 0 se non hanno vendite)
+SELECT Artisti.nome, Artisti.cognome, AlbumVirtuale.titolo, sum(quantita) as albumVenduti
+FROM Artisti
+LEFT JOIN AlbumVirtuale
+ON AlbumVirtuale.artista_id = Artisti.id
+LEFT JOIN RigheScontrino
+ON RigheScontrino.album_id = AlbumVirtuale.codice
+GROUP BY Artisti.id
