@@ -1,0 +1,59 @@
+erDiagram
+%%non ce bisogno della impresa e della sede centrale perche non ci vengono ne forniti 
+%%dati riguardanti ne che ce bisogno di gestire le interazioni tra filiale e sede centrale
+    filiale {
+        string codice_numerico PK
+        string indirizzo
+        string città
+        string vendite
+        string produzione
+    }    
+    panettiere {
+        int id PK
+        string nome
+        string specialità 
+        %%per me specialita e una semplice stringa perche non sono richiesti altri dati correlati
+        int codice_filiale FK
+    }
+    prodotto {
+        int codice PK
+        string nome
+        float prezzo
+        int codice_panettiere FK
+    }
+    ingrediente {
+        int codice PK
+        string nome
+        float quantita
+        float costo
+        int codice_prodotti FK
+    }
+    vendita {
+        int codice PK
+        date data
+        float importo
+        int codice_filiale FK
+    }
+    righe_vendita {
+        int id PK
+        float quantita_prodotto
+        float prezzo_unitario_applicato
+        int vendita_id FK
+        int codice_prodotti FK
+        
+    }
+    %%di base un prodotto sta ma in tante vendite e una vendita ha tanti prodotti e sarebbe una relazione n-n ma visto che abbiamo righe vendita dove posiamo spezzare 
+    %%la n-n e inserire i dati comuni che riguardano entrambe le tabelle
+    filiale ||--o{ panettiere : lavorano
+    panettiere ||--o{ prodotto : usa
+    prodotto ||--o{ ingrediente : contiene
+    filiale ||--o{ vendita : effettua
+    vendita ||--o{ righe_vendita : "dettaglia"
+    righe_vendita }o--|| prodotto : "riguarda"
+
+    
+
+    
+
+    
+
