@@ -1,27 +1,36 @@
 import requests
 import json
+import db_utils
 
-# Definiamo l'URL dell'endpoint a cui vogliamo fare la richie
-
-url = f"https://jsonplaceholder.typicode.com/posts/"
-try:
-    # 1. Eseguiamo la richiesta GET
-    response = requests.get(url)
-    # 2. Controlliamo se la richiesta è andata a buon fine (status code 200 OK)
-    response.raise_for_status()  # Solleva un'eccezione per status code 4xx o 5xx
-    # 3. Estraiamo i dati JSON dalla risposta
-    # Il metodo .json() converte automaticamente il corpo della risposta da stringa JSON a dizionario Python
-    dati_utente = response.json()
-    # 4. Usiamo i dati
-    print("--- Dati Utente Ricevuti ---")
-    # Usiamo json.dumps per una stampa "bella" (pretty-print) del dizionario
-    print(json.dumps(dati_utente, indent=4))
+    
+def post_utenti(user_id):
+    url = f"https://jsonplaceholder.typicode.com/users/{user_id}/posts"
+    dati_utente = db_utils.get_model(url)
     print("\n--- Post dell'utente 1 ---")
-    print(f"userId: {dati_utente['userId']}")
-    print(f"id: {dati_utente['id']}")
-    print(f"title: {dati_utente['title']}")
-    print(f"body: {dati_utente['body']}")
-except requests.exceptions.HTTPError as err:
-    print(f"Errore HTTP: {err}")
-except requests.exceptions.RequestException as err:
-    print(f"Errore durante la richiesta: {err}")
+    for post in dati_utente:
+        print(f"ID Post: {post['userId']}, Titolo: {post['title']}")
+    
+def commenti(posts_id):
+    url = f"https://jsonplaceholder.typicode.com/posts/{posts_id}/comments"
+    dati_utente = db_utils.get_model(url)
+    print("--- Commenti per il primo post ---")
+    for comment in dati_utente:
+        print(f"ID Commenti: {comment['id']}, Titolo: {comment['name']}")
+
+def nuovo_commento(nuovo_comment):
+    url = "https://jsonplaceholder.typicode.com/comments"
+    post_creato = db_utils.posts_model(url, nuovo_comment)
+    print(json.dumps(post_creato, indent=20))
+    print(f"\nIl nostro post è stato creato con ID: {post_creato['id']}")
+
+    
+if __name__ == "__main__":
+    post_utenti(1)
+    commenti(1)
+    nuovo_commento({
+    "postId": 1,
+    "id": 501,
+    "name": "Nuovo Commentatore",
+    "email": "nuovo@example.com",
+    "body": "Questo è un commento aggiunto tramite API!"
+})
