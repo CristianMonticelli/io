@@ -1,5 +1,4 @@
 import requests
-import json
 import db_utils
 
     
@@ -26,36 +25,22 @@ def trova_primo_todo_incompleto(user_id):
     for todo in dati_utente:
         if todo['completed'] == False:
             print("\n--- Primo Todo Incompleto ---")
-            print(json.dumps(todo, indent=4))
             return todo
     print("Tutti i todos sono completati.")
     return None
 
 #Se trovato, marca quel todo come completato utilizzando una richiesta PUT. 
 # Altrimenti, segnala che non ci sono tutti incompleti.
-def marca_todo_completato(user_id):
+def marca_primo_todo_completato(user_id):
     todo_incompleto = trova_primo_todo_incompleto(user_id)
-    url = f"https://jsonplaceholder.typicode.com/users/{user_id}/todos/{todo_incompleto['id']}"
-    db_utils.get_model(url)
-    try:
-        response = requests.put(url, parametri={'completed': True})
-
-
-
-        # Controlliamo lo status code
-        response.raise_for_status()
-
-        # Analizziamo la risposta del server
-        post_creato = response.json()
-        
-        print("--- Todos modificato ---")
-        print(f"Status Code: {response.status_code} (modificato!)")
-        return post_creato
-    except requests.exceptions.RequestException as err:
-        print(f"Errore durante la richiesta: {err}")
+    id_todo = todo_incompleto["id"]
+    todo_completo = todo_incompleto["completed"] = True
+    print(todo_completo)
+    url = f"https://jsonplaceholder.typicode.com/todos/{id_todo}"
+    db_utils.put_model(url, todo_incompleto)
     
 if __name__ == "__main__":
     todos_utenti(1)
     trova_primo_todo_incompleto(1)
-    marca_todo_completato(1)
+    marca_primo_todo_completato(1)
     
