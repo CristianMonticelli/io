@@ -1,5 +1,6 @@
 .venv
 ehgqe.py
 db_utils.py
+utils.py
 __pycache__/
 prefabbricati
