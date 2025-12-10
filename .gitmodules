@@ -4,3 +4,6 @@
 [submodule "sito/it_fork"]
 	path = sito/it_fork
 	url = https://github.com/CristianMonticelli/IT.git
+[submodule "it_fork"]
+	path = it_fork
+	url = https://github.com/CristianMonticelli/IT.git
