@@ -1,3 +1,6 @@
 [submodule "IT"]
 	path = IT
 	url = https://github.com/angelogalantiscuola/IT.git
+[submodule "sito/it_fork"]
+	path = sito/it_fork
+	url = https://github.com/CristianMonticelli/IT.git
