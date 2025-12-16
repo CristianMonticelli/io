@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Registrazione o accedi</h2>
+  <form method="post">
+    <label for="username">Username</label>
+    <input name="username" id="username" required>
+    
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" required>
+    <hr>
+    <form>
+      <input type="radio" id="azione" name="azione" value="login">
+      <label for="login">Accedi</label><br>
+      <input type="radio" id="azione" name="azione" value="register">
+      <label for="register">Registrazione</label><br>
+    </form> 
+    <hr>
+
+    <input type="submit" value="Registrati o Accedi">
+  </form>
+{% endblock %}
