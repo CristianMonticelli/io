@@ -1,0 +1,6 @@
+nome = input("nome + cognome alunno:")
+v1 = float(input("voto1:"))
+v2 = float(input("voto2:")) 
+v3 = float(input("voto3:"))
+media = float((v1 + v2 + v3)/3)
+print("media "+ nome + str(media))

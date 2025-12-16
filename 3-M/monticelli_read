@@ -1,0 +1,2 @@
+file = open("exercise1.txt")
+print(file)
