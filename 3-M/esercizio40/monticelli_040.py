@@ -37,4 +37,4 @@ def ricette(id=None):
 def ricette_link():
     return render_template("ricette.html",links=ricetta)
 if __name__ == "__main__":
-    app.run(debug=True, port=6783) 
+    app.run(debug=True, port=6611) 

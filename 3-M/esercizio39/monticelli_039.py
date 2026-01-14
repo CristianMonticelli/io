@@ -59,5 +59,5 @@ def random_test():
     # return render_template('monticelli_039.html', flashcard=flashcard[0])
 
 if __name__ == "__main__":
-    app.run(debug=True, port=6783) 
+    app.run(debug=True, port=6683) 
     
