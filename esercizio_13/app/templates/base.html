@@ -3,7 +3,6 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Blog Scolastico{% endblock %}</title>
     <!-- Qui potremmo linkare un CSS -->
     <style>
         body { font-family: sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
@@ -12,20 +11,6 @@
     </style>
 </head>
 <body>
-    <nav>
-        <a href="{{ url_for('main.index') }}">Blog Scolastico</a>
-        
-        <!-- LOGICA DINAMICA DELLA NAVBAR -->
-        {% if g.user %}
-            <!-- Se g.user esiste, l'utente è loggato -->
-            <span>Ciao, {{ g.user['username'] }}</span>
-            <a href="{{ url_for('auth.logout') }}">Logout</a>
-        {% else %}
-            <!-- Altrimenti mostriamo i tasti di accesso -->
-            <a href="{{ url_for('auth.register') }}">Registrati</a>
-            <a href="{{ url_for('auth.login') }}">Login</a>
-        {% endif %}
-    </nav>
     <hr>
 
     <!-- Zona Messaggi Flash -->
@@ -38,10 +23,9 @@
     <main>
         {% block content %}{% endblock %}
     </main>
-
     <hr>
     <footer>
-        <small>&copy; 2024 - Classe 5^A Informatica</small>
+        <small>&copy; 2024 - video</small>
     </footer>
 </body>
 </html>

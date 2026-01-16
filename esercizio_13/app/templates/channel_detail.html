@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>video disponibili</h1>
+  {% for video in channel %}
+  <article>
+    <header>
+      <small>video: {{ video['titolo']}}</small>
+    </header>
+  </article>
+  <hr>
+  {% endfor %}
+{% endblock %}

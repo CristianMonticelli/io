@@ -11,7 +11,7 @@ db_path = os.path.join('instance', 'youtubo.sqlite')
 connection = sqlite3.connect(db_path)
 
 # Leggiamo lo schema SQL
-with open('app/youtubo.sql') as f:
+with open('app/schema.sql') as f:
     connection.executescript(f.read())
 
 print("Database creato con successo in:", db_path)
