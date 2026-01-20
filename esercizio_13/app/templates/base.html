@@ -19,7 +19,12 @@
             {{ message }}
         </div>
     {% endfor %}
+    <nav>
+        <a href="{{ url_for('main.index') }}">Home</a>
+        <a href="{{ url_for('main.create_channel') }}">nuovo canale</a>
+        <a href="{{ url_for('main.create_video') }}">nuovo video</a>
 
+    </nav>
     <main>
         {% block content %}{% endblock %}
     </main>

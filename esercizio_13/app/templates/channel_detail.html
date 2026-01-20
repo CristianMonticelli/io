@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>video disponibili</h1>
-  {% for video in channel %}
+  <h1>Canale: {{ channel['nome'] }}</h1>
+<p>Categoria: {{ channel['categoria'] }} - Iscritti: {{ channel['numero_iscritti'] }}</p>
+
+  {% for video in videos %}
   <article>
     <header>
       <small>video: {{ video['titolo']}}</small>

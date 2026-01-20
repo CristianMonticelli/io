@@ -9,42 +9,64 @@ bp = Blueprint('main', __name__)
 
 @bp.route('/')
 def index():
-    # 1. Prendiamo i canali veri dal database
     channels_py: list[dict] = canale_repo.get_canale()
     
-    # 2. Passiamo la variabile 'canali' al template
     return render_template('index.html', channels_html=channels_py)
-pass
 
 
-@bp.route('/create', methods=('GET', 'POST'))
-def create():
-    # Protezione: Se non sei loggato, vai al login
-  
 
-    if request.method == 'POST':
-        title = request.form['title']
-        body = request.form['body']
+
+@bp.route('/channel_detail/<int:id>')
+def channel_detail(id):
+    channel_detail = canale_repo.get_canale_id(id)
+    video = canale_repo.get_video_id(id)
+
+    return render_template('channel_detail.html', channel=channel_detail, videos=video)
+
+@bp.route("/url_crea", methods=("GET", "POST"))
+def create_channel():
+    if request.method == "POST":
+        nome = request.form["nome"]
+        numero_iscritti = request.form.get("numero_iscritti", 0, type=int)
+        categoria = request.form["categoria"]
         error = None
 
-        if not title:
-            error = 'Il titolo è obbligatorio.'
+        if not nome:
+            error = "Il nome è obbligatorio."
+        if not categoria:
+            error = "La categoria è obbligatoria."
 
         if error is not None:
             flash(error)
         else:
-            # Creiamo il post usando l'ID dell'utente loggato (g.user['id'])
-            post_repository.create_post(title, body, g.user['id'])
-            return redirect(url_for('main.index'))
+            # Creiamo il canale
+            canale_repo.create_channel(nome, numero_iscritti, categoria)
+            return redirect(url_for("main.index"))
 
-    return render_template('blog/create.html')
+    return render_template("blog/create_channel.html")
 
-@bp.route('/channel_detail/<int:id>')
-def channel_detail(id):
-    # 1. Recupera il post dal DB
-    channel = canale_repo.get_canale_id(id)
 
-    # 2. Se non esiste -> Errore 404 Not Found
-    if channel is None:
-        abort(404, f"Il post id {id} non esiste.")
-    return render_template('channel_detail.html', channel=channel)
+@bp.route("/create_video", methods=("GET", "POST"))
+def create_video():
+    if request.method == "POST":
+        canale_id = request.form["canale_id"]
+        titolo = request.form["titolo"]
+        durata = request.form["durata"]
+        immagine = request.form["immagine"]
+
+        error = None
+
+        if not titolo:
+            error = "Il nome è obbligatorio."
+        if not durata:
+            error = "La categoria è obbligatoria."
+
+        if error is not None:
+            flash(error)
+        else:
+            # Creiamo il canale
+            canale_repo.create_video(canale_id, titolo, durata, immagine)
+            return redirect(url_for("main.index"))
+    channels_py: list[dict] = canale_repo.get_canale()
+    
+    return render_template("blog/create_video.html",  channels_html=channels_py)
