@@ -6,8 +6,12 @@
   <article>
     <header>
       <h2><a href="{{ url_for('main.channel_detail', id=channel['id']) }}">{{ channel['nome']}}</a></h2>
-      <small>Categoria: {{ channel['categoria']}} - Iscritti: {{channel['numero_iscritti']}} </small>
-    </header>
+      {% for categoria in categoria_html %}
+        {% if categoria['id'] == channel['categoria_id'] %}
+          <p>Categoria: {{ categoria['nome'] }} - Iscritti: {{ channel['numero_iscritti'] }}</p>
+        {% endif %}
+      {% endfor %}
+      </header>
   </article>
   <hr>
   {% endfor %}

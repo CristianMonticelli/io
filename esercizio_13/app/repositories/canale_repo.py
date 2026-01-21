@@ -3,7 +3,7 @@ from app.db import get_db
 def get_canale():
     db = get_db()
     query = '''
-            SELECT id, nome, numero_iscritti, categoria
+            SELECT id, nome, numero_iscritti, categoria_id
             FROM canali 
             ORDER BY numero_iscritti DESC'''
        
@@ -11,11 +11,21 @@ def get_canale():
     channels = db.execute(query).fetchall()
     return [dict(channel) for channel in channels]
 
+def get_categoria():
+    db = get_db()
+    query = '''
+            SELECT id, nome  
+            FROM categoria 
+            '''
+       
+        
+    categorie = db.execute(query).fetchall()
+    return [dict(categoria) for categoria in categorie]
 
 def get_canale_id(id):
     db = get_db()
     query = '''
-            SELECT id, nome, numero_iscritti, categoria
+            SELECT id, nome, numero_iscritti, categoria_id
             FROM canali 
             WHERE id=?'''
     print("--------------------------------------------------------")

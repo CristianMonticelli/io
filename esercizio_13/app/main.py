@@ -10,8 +10,9 @@ bp = Blueprint('main', __name__)
 @bp.route('/')
 def index():
     channels_py: list[dict] = canale_repo.get_canale()
+    categoria_py: list[dict] = canale_repo.get_categoria()
     
-    return render_template('index.html', channels_html=channels_py)
+    return render_template('index.html', channels_html=channels_py, categoria_html=categoria_py)
 
 
 
@@ -20,8 +21,9 @@ def index():
 def channel_detail(id):
     channel_detail = canale_repo.get_canale_id(id)
     video = canale_repo.get_video_id(id)
+    categoria_py: list[dict] = canale_repo.get_categoria()
 
-    return render_template('channel_detail.html', channel=channel_detail, videos=video)
+    return render_template('channel_detail.html', channel=channel_detail, videos=video, categoria_html=categoria_py)
 
 @bp.route("/url_crea", methods=("GET", "POST"))
 def create_channel():
@@ -42,8 +44,8 @@ def create_channel():
             # Creiamo il canale
             canale_repo.create_channel(nome, numero_iscritti, categoria)
             return redirect(url_for("main.index"))
-
-    return render_template("blog/create_channel.html")
+    categories_py: list[dict] = canale_repo.get_categoria()
+    return render_template("blog/create_channel.html",  categories_html=categories_py)
 
 
 @bp.route("/create_video", methods=("GET", "POST"))

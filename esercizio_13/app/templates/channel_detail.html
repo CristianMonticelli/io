@@ -2,7 +2,12 @@
 
 {% block content %}
   <h1>Canale: {{ channel['nome'] }}</h1>
-<p>Categoria: {{ channel['categoria'] }} - Iscritti: {{ channel['numero_iscritti'] }}</p>
+  <h2><a href="{{ url_for('main.channel_detail', id=channel['id']) }}">{{ channel['nome']}}</a></h2>
+      {% for categoria in categoria_html %}
+        {% if categoria['id'] == channel['categoria_id'] %}
+          <p>Categoria: {{ categoria['nome'] }} - Iscritti: {{ channel['numero_iscritti'] }}</p>
+        {% endif %}
+      {% endfor %}
 
   {% for video in videos %}
   <article>
