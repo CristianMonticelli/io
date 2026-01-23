@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Categorie</h1>
+      {% for categoria in categoria_html %}
+        <h2>Categoria: {{ categoria['nome'] }}</h2>
+      {% endfor %}
+
+  
+{% endblock %}

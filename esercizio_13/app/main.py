@@ -2,7 +2,7 @@ from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for
 )
 from werkzeug.exceptions import abort
-from app.repositories import canale_repo
+from app.repositories import canale_repo, categori_repo,video_repo
 
 # Usiamo 'main' perché è il blueprint principale del sito
 bp = Blueprint('main', __name__)
@@ -10,7 +10,7 @@ bp = Blueprint('main', __name__)
 @bp.route('/')
 def index():
     channels_py: list[dict] = canale_repo.get_canale()
-    categoria_py: list[dict] = canale_repo.get_categoria()
+    categoria_py: list[dict] = categori_repo.get_categoria()
     
     return render_template('index.html', channels_html=channels_py, categoria_html=categoria_py)
 
@@ -20,8 +20,8 @@ def index():
 @bp.route('/channel_detail/<int:id>')
 def channel_detail(id):
     channel_detail = canale_repo.get_canale_id(id)
-    video = canale_repo.get_video_id(id)
-    categoria_py: list[dict] = canale_repo.get_categoria()
+    video = video_repo.get_video_id(id)
+    categoria_py: list[dict] = categori_repo.get_categoria()
 
     return render_template('channel_detail.html', channel=channel_detail, videos=video, categoria_html=categoria_py)
 
@@ -44,7 +44,7 @@ def create_channel():
             # Creiamo il canale
             canale_repo.create_channel(nome, numero_iscritti, categoria)
             return redirect(url_for("main.index"))
-    categories_py: list[dict] = canale_repo.get_categoria()
+    categories_py: list[dict] = categori_repo.get_categoria()
     return render_template("blog/create_channel.html",  categories_html=categories_py)
 
 
@@ -67,8 +67,44 @@ def create_video():
             flash(error)
         else:
             # Creiamo il canale
-            canale_repo.create_video(canale_id, titolo, durata, immagine)
+            video_repo.create_video(canale_id, titolo, durata, immagine)
             return redirect(url_for("main.index"))
     channels_py: list[dict] = canale_repo.get_canale()
     
     return render_template("blog/create_video.html",  channels_html=channels_py)
+
+@bp.route("/create_category", methods=("GET", "POST"))
+def create_category():
+    
+    if request.method == "POST":
+        categoria = request.form["categoria"]
+        error = None
+        categorie = categori_repo.get_categoria()
+        print(categoria)
+        print(categorie)
+        print('================================')
+        for c in categorie:
+            if categoria == c['nome']:
+                print(c['nome'])
+                error = "categoria esistente"
+
+        
+
+        if not categoria:
+            error = "Il categoria è obbligatorio."
+       
+        if error is not None:
+            flash(error)
+        else:
+            # Creiamo il canale
+            categori_repo.create_category(categoria)
+            return redirect(url_for("main.index"))
+    
+    return render_template("blog/create_category.html")
+
+@bp.route('/categorie')
+def categorie():
+
+    categoria_py: list[dict] = categori_repo.get_categoria()
+
+    return render_template('categoi.html', categoria_html=categoria_py)

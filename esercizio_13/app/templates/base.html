@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <!-- Qui potremmo linkare un CSS -->
     <style>
-        body { font-family: sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        body { font-family:color: red, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
         nav a { margin-right: 10px; text-decoration: none; color: blue; }
-        hr { border: 0; border-top: 1px solid #ccc; }
+        hr { border: 0; border-top: 1px solid #000000ff; }
+
     </style>
 </head>
 <body>
@@ -23,6 +24,9 @@
         <a href="{{ url_for('main.index') }}">Home</a>
         <a href="{{ url_for('main.create_channel') }}">nuovo canale</a>
         <a href="{{ url_for('main.create_video') }}">nuovo video</a>
+        <a href="{{ url_for('main.create_category') }}">nuovo categoria</a>
+        <a href="{{ url_for('main.categorie') }}">tutte categorie</a>
+
 
     </nav>
     <main>
