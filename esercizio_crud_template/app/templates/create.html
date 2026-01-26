@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Crea Item - CRUD Template{% endblock %}
+
+{% block content %}
+<h2>Crea un nuovo Item</h2>
+
+<form method="POST">
+    <div class="form-group">
+        <label for="name">Nome *</label>
+        <input type="text" id="name" name="name" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="description">Descrizione</label>
+        <textarea id="description" name="description"></textarea>
+    </div>
+    
+    <!-- TODO: Aggiungi altri campi qui durante la verifica -->
+    
+    <div>
+        <button type="submit" class="btn btn-success">Salva</button>
+        <a href="{{ url_for('main.index') }}" class="btn btn-primary">Annulla</a>
+    </div>
+</form>
+{% endblock %}

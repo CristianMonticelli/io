@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - CRUD Template{% endblock %}
+
+{% block content %}
+<h2>Lista di Item</h2>
+
+{% if items %}
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Azioni</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>
+                        <a href="{{ url_for('main.view_item', item_id=item.id) }}" class="btn btn-primary">Visualizza</a>
+                        <a href="{{ url_for('main.update', item_id=item.id) }}" class="btn btn-warning">Modifica</a>
+                        <form method="POST" action="{{ url_for('main.delete', item_id=item.id) }}" style="display: inline;">
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Sei sicuro?')">Elimina</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p style="text-align: center; color: #7f8c8d; margin: 40px 0;">
+        Nessun item trovato. <a href="{{ url_for('main.create') }}" class="btn btn-success">Crea il primo!</a>
+    </p>
+{% endif %}
+{% endblock %}

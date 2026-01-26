@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Modifica Item - CRUD Template{% endblock %}
+
+{% block content %}
+<h2>Modifica Item</h2>
+
+{% if item %}
+    <form method="POST">
+        <div class="form-group">
+            <label for="name">Nome *</label>
+            <input type="text" id="name" name="name" value="{{ item.name }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="description">Descrizione</label>
+            <textarea id="description" name="description">{{ item.description }}</textarea>
+        </div>
+        
+        <!-- TODO: Aggiungi altri campi qui durante la verifica -->
+        
+        <div>
+            <button type="submit" class="btn btn-success">Salva Modifiche</button>
+            <a href="{{ url_for('main.view_item', item_id=item.id) }}" class="btn btn-primary">Annulla</a>
+        </div>
+    </form>
+{% else %}
+    <p>Item non trovato.</p>
+    <a href="{{ url_for('main.index') }}" class="btn btn-primary">Torna alla lista</a>
+{% endif %}
+{% endblock %}
