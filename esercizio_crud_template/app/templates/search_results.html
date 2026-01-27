@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}Risultati Ricerca - CRUD Template{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 30px;">
+    <h2>Ricerca Item</h2>
+    <form method="GET" action="{{ url_for('main.search') }}" style="display: flex; gap: 10px; margin: 20px 0;">
+        <input 
+            type="text" 
+            name="q" 
+            placeholder="Cerca per nome o descrizione..." 
+            value="{{ search_term }}"
+            style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 4px;"
+            required
+        />
+        <button type="submit" class="btn btn-primary">Cerca</button>
+        {% if search_term %}
+            <a href="{{ url_for('main.index') }}" class="btn btn-secondary">Cancella</a>
+        {% endif %}
+    </form>
+</div>
+
+{% if search_term %}
+    <div style="background-color: #ecf0f1; padding: 15px; border-radius: 4px; margin-bottom: 20px;">
+        <p><strong>Ricerca:</strong> "{{ search_term }}" 
+           <span style="color: #7f8c8d;">({{ items|length }} risultato{% if items|length != 1 %}i{% endif %} trovato{% if items|length != 1 %}i{% endif %})</span>
+        </p>
+    </div>
+
+    {% if items %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Descrizione</th>
+                    <th>Data Creazione</th>
+                    <th>Azioni</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                    <tr>
+                        <td>{{ item.id }}</td>
+                        <td>
+                            <strong>{{ item.name }}</strong>
+                        </td>
+                        <td>{{ item.description or '—' }}</td>
+                        <td>
+                            {% if item.created %}
+                                {{ item.created[:10] }}
+                            {% else %}
+                                —
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ url_for('main.view_item', item_id=item.id) }}" class="btn btn-primary">Visualizza</a>
+                            <a href="{{ url_for('main.update', item_id=item.id) }}" class="btn btn-warning">Modifica</a>
+                            <form method="POST" action="{{ url_for('main.delete', item_id=item.id) }}" style="display: inline;">
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Sei sicuro?')">Elimina</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div style="text-align: center; color: #7f8c8d; padding: 40px;">
+            <p>Nessun risultato trovato per "<strong>{{ search_term }}</strong>"</p>
+            <p>Prova con un altro termine di ricerca</p>
+        </div>
+    {% endif %}
+{% else %}
+    <div style="text-align: center; color: #7f8c8d; padding: 40px;">
+        <p>Inserisci un termine per cercare gli item</p>
+    </div>
+{% endif %}
+
+{% endblock %}
