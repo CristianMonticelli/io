@@ -1,0 +1,40 @@
+<!-- app/templates/base.html -->
+<!doctype html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <!-- Qui potremmo linkare un CSS -->
+    <style>
+        body { font-family:color: red, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        nav a { margin-right: 10px; text-decoration: none; color: blue; }
+        hr { border: 0; border-top: 1px solid #000000ff; }
+
+    </style>
+</head>
+<body>
+    <hr>
+
+    <!-- Zona Messaggi Flash -->
+    {% for message in get_flashed_messages() %}
+        <div class="flash" style="color: red; border: 1px solid red; padding: 10px;">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <nav>
+        <a href="{{ url_for('main.index') }}">Home</a>
+        <a href="{{ url_for('main.create_channel') }}">nuovo canale</a>
+        <a href="{{ url_for('main.create_video') }}">nuovo video</a>
+        <a href="{{ url_for('main.create_category') }}">nuovo categoria</a>
+        <a href="{{ url_for('main.categorie') }}">tutte categorie</a>
+
+
+    </nav>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <hr>
+    <footer>
+        <small>&copy; 2024 - video</small>
+    </footer>
+</body>
+</html>
