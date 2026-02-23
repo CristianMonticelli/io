@@ -1,0 +1,239 @@
+"""Repository per le operazioni CRUD su items - VERSIONE ESTESA"""
+from app import get_db
+from datetime import datetime, timedelta
+
+# ==================== QUERY BASE (già presenti) ====================
+
+def get_all_items():
+    """Ritorna tutti gli item dal database"""
+    db = get_db()
+    query = """
+        SELECT 
+            id,
+            name,
+            description,
+            created
+        FROM items
+        ORDER BY created DESC
+    """
+    items = db.execute(query).fetchall()
+    return items if items else []
+
+def get_item_by_id(item_id):
+    """Ritorna un item specifico per ID"""
+    db = get_db()
+    query = """
+        SELECT 
+            id,
+            name,
+            description,
+            created
+        FROM items
+        WHERE id = ?
+    """
+    item = db.execute(query, (item_id,)).fetchone()
+    return item
+
+def search_items_by_name(search_term):
+    """Ricerca item per nome (case-insensitive con LIKE)"""
+    db = get_db()
+    search_pattern = f"%{search_term}%"
+    query = """
+        SELECT 
+            id,
+            name,
+            description,
+            created
+        FROM items
+        WHERE LOWER(name) LIKE LOWER(?)
+        ORDER BY created DESC
+    """
+    items = db.execute(query, (search_pattern,)).fetchall()
+    return items if items else []
+
+def create_item(name, description):
+    """Crea un nuovo item nel database"""
+    db = get_db()
+    query = """
+        INSERT INTO items (name, description)
+        VALUES (?, ?)
+    """
+    db.execute(query, (name, description))
+    db.commit()
+
+def update_item(item_id, name, description):
+    """Aggiorna un item esistente"""
+    db = get_db()
+    query = """
+        UPDATE items
+        SET name = ?, description = ?
+        WHERE id = ?
+    """
+    db.execute(query, (name, description, item_id))
+    db.commit()
+
+def delete_item(item_id):
+    """Elimina un item dal database"""
+    db = get_db()
+    query = """
+        DELETE FROM items
+        WHERE id = ?
+    """
+    db.execute(query, (item_id,))
+    db.commit()
+
+
+# ==================== QUERY AGGIUNTIVE UTILI ====================
+
+def get_items_count():
+    """Ritorna il numero totale di items"""
+    db = get_db()
+    query = "SELECT COUNT(*) as count FROM items"
+    result = db.execute(query).fetchone()
+    return result['count'] if result else 0
+
+def get_recent_items(limit=5):
+    """Ritorna gli ultimi N items creati"""
+    db = get_db()
+    query = """
+        SELECT 
+            id,
+            name,
+            description,
+            created
+        FROM items
+        ORDER BY created DESC
+        LIMIT ?
+    """
+    items = db.execute(query, (limit,)).fetchall()
+    return items if items else []
+
+def get_items_by_date_range(start_date, end_date):
+    """Ritorna items creati in un range di date"""
+    db = get_db()
+    query = """
+        SELECT 
+            id,
+            name,
+            description,
+            created
+        FROM items
+        WHERE DATE(created) BETWEEN DATE(?) AND DATE(?)
+        ORDER BY created DESC
+    """
+    items = db.execute(query, (start_date, end_date)).fetchall()
+    return items if items else []
+
+def get_items_created_today():
+    """Ritorna items creati oggi"""
+    db = get_db()
+    today = datetime.now().strftime('%Y-%m-%d')
+    query = """
+        SELECT 
+            id,
+            name,
+            description,
+            created
+        FROM items
+        WHERE DATE(created) = DATE(?)
+        ORDER BY created DESC
+    """
+    items = db.execute(query, (today,)).fetchall()
+    return items if items else []
+
+def search_items_advanced(search_term):
+    """Ricerca avanzata: cerca in nome E descrizione"""
+    db = get_db()
+    search_pattern = f"%{search_term}%"
+    query = """
+        SELECT 
+            id,
+            name,
+            description,
+            created
+        FROM items
+        WHERE LOWER(name) LIKE LOWER(?) 
+           OR LOWER(description) LIKE LOWER(?)
+        ORDER BY created DESC
+    """
+    items = db.execute(query, (search_pattern, search_pattern)).fetchall()
+    return items if items else []
+
+def get_items_paginated(page=1, per_page=10):
+    """Ritorna items con paginazione"""
+    db = get_db()
+    offset = (page - 1) * per_page
+    query = """
+        SELECT 
+            id,
+            name,
+            description,
+            created
+        FROM items
+        ORDER BY created DESC
+        LIMIT ? OFFSET ?
+    """
+    items = db.execute(query, (per_page, offset)).fetchall()
+    return items if items else []
+
+def item_exists(item_id):
+    """Verifica se un item esiste"""
+    db = get_db()
+    query = "SELECT COUNT(*) as count FROM items WHERE id = ?"
+    result = db.execute(query, (item_id,)).fetchone()
+    return result['count'] > 0 if result else False
+
+def get_items_statistics():
+    """Ritorna statistiche sugli items"""
+    db = get_db()
+    query = """
+        SELECT 
+            COUNT(*) as total_items,
+            COUNT(CASE WHEN DATE(created) = DATE('now') THEN 1 END) as created_today,
+            COUNT(CASE WHEN DATE(created) >= DATE('now', '-7 days') THEN 1 END) as created_last_week,
+            MIN(created) as first_item_date,
+            MAX(created) as last_item_date
+        FROM items
+    """
+    stats = db.execute(query).fetchone()
+    return stats
+
+def delete_old_items(days=30):
+    """Elimina items più vecchi di N giorni"""
+    db = get_db()
+    cutoff_date = (datetime.now() - timedelta(days=days)).strftime('%Y-%m-%d')
+    query = """
+        DELETE FROM items
+        WHERE DATE(created) < DATE(?)
+    """
+    cursor = db.execute(query, (cutoff_date,))
+    db.commit()
+    return cursor.rowcount  # Ritorna il numero di righe eliminate
+
+def bulk_delete_items(item_ids):
+    """Elimina multipli items"""
+    db = get_db()
+    placeholders = ','.join('?' * len(item_ids))
+    query = f"DELETE FROM items WHERE id IN ({placeholders})"
+    cursor = db.execute(query, item_ids)
+    db.commit()
+    return cursor.rowcount
+
+def duplicate_item(item_id):
+    """Duplica un item esistente"""
+    db = get_db()
+    # Prima recupera l'item originale
+    original = get_item_by_id(item_id)
+    if not original:
+        return None
+    
+    # Crea una copia con "(Copia)" nel nome
+    query = """
+        INSERT INTO items (name, description)
+        VALUES (?, ?)
+    """
+    db.execute(query, (f"{original['name']} (Copia)", original['description']))
+    db.commit()
+    
+    # Ritorna l'ID del nuovo item
+    return db.execute("SELECT last_insert_rowid()").fetchone()[0]
