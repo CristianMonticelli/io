@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Genera PPT</title>
+</head>
+<body>
+    <h2>Crea una slide</h2>
+
+    <form action="/generate" method="post">
+        <label>Titolo:</label><br>
+        <input type="text" name="title"><br><br>
+
+        <label>Contenuto:</label><br>
+        <textarea name="content"></textarea><br><br>
+
+        <button type="submit">Genera PowerPoint</button>
+    </form>
+</body>
+</html>
+Sì — **assolutamente sì** 👍
+Con `python-pptx` puoi ottenere (e impostare) **coordinate e dimensioni precise** di ogni elemento (shape) nelle slide.
+
+Ti spiego come funziona davvero 👇
+
+---
+
+# 📐 Sistema di coordinate in PowerPoint
+
+PowerPoint usa un sistema basato su:
+
+👉 **EMU (English Metric Units)**
+
+* 1 pollice = **914400 EMU**
+
+Ma tranquillo: `python-pptx` ti semplifica la vita con unità più leggibili:
+
+* `Inches()`
+* `Cm()`
+* `Pt()`
+
+---
+
+# 🧩 1. Leggere posizione e dimensioni
+
+Ogni elemento (`shape`) ha queste proprietà:
+
+```python
+shape.left     # distanza da sinistra
+shape.top      # distanza dall'alto
+shape.width    # larghezza
+shape.height   # altezza
+```
+
+---
+
+### 💻 Esempio
+
+```python
+from pptx import Presentation
+
+prs = Presentation("file.pptx")
+slide = prs.slides[0]
+
+for shape in slide.shapes:
+    print("Nome:", shape.name)
+    print("X:", shape.left)
+    print("Y:", shape.top)
+    print("Width:", shape.width)
+    print("Height:", shape.height)
+    print("-----")
+```
+
+👉 Output: valori in EMU
+
+---
+
+# 📏 2. Convertire in cm o pixel
+
+```python
+from pptx.util import Inches, Cm
+
+# esempio conversione manuale
+cm = shape.left / 360000
+```
+
+👉 1 cm ≈ 360000 EMU
+
+---
+
+# 🎯 3. Impostare posizione precisa
+
+Puoi anche controllare layout “tipo HTML”:
+
+```python
+from pptx.util import Inches
+
+textbox = slide.shapes.add_textbox(
+    left=Inches(1),
+    top=Inches(2),
+    width=Inches(4),
+    height=Inches(1)
+)
+```
+
+---
+
+# 🔄 4. Collegamento con HTML (importantissimo)
+
+Se vuoi sincronizzare HTML ↔ PPT:
+
+## 👉 Mappa concettuale
+
+| HTML (CSS) | PowerPoint   |
+| ---------- | ------------ |
+| left       | shape.left   |
+| top        | shape.top    |
+| width      | shape.width  |
+| height     | shape.height |
+
+---
+
+## 💡 Esempio conversione HTML → PPT
+
+```python
+def px_to_emu(px):
+    return int(px * 9525)  # 1px ≈ 9525 EMU
+
+left = px_to_emu(100)
+top = px_to_emu(50)
+width = px_to_emu(300)
+height = px_to_emu(100)
+```
+
+---
+
+# 🚀 5. Caso reale (molto utile)
+
+👉 Editor web tipo Canva / PowerPoint
+
+* frontend HTML: elementi con `position: absolute`
+* salvi:
+
+```json
+{
+  "x": 100,
+  "y": 50,
+  "width": 300,
+  "height": 100
+}
+```
+
+* backend:
+  → converti in EMU
+  → generi slide identica
+
+---
+
+# ⚠️ Attenzione (limite importante)
+
+* PowerPoint **non usa pixel**, ma dimensioni fisiche
+* HTML dipende da:
+
+  * risoluzione schermo
+  * zoom
+  * DPI
+
+👉 quindi serve sempre una **conversione coerente**
+
+---
+
+# 🧠 TL;DR
+
+✔️ Sì, puoi ottenere coordinate e dimensioni
+✔️ Sono precise (EMU)
+✔️ Puoi replicare layout HTML
+✔️ Perfetto per editor visuali
+
+---
+
+Se vuoi, nel prossimo passo posso farti:
+
+👉 un mini editor HTML drag & drop
+👉 che esporta un PPT identico
+
+(quello è il livello “pro” 🔥)
