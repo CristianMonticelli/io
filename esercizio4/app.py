@@ -67,7 +67,7 @@ def init_db():
         with open('schema.sql', 'r') as f:
             db.executescript(f.read())
         db.commit()
-        print("✅ Database inizializzato!")
+        print("Database inizializzato!")
 
 # ============================================================================
 # PARTE 2: ROUTE FLASK

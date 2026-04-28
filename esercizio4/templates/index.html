@@ -145,23 +145,6 @@
             document.getElementById('risultato').innerHTML = '';
             document.getElementById('codice').focus();
         }
-
-        // ====================================================================
-        // BONUS: Premere ENTER per cercare
-        // ====================================================================
-
-        /**
-         * Aggiungiamo un event listener sull'input in modo che se l'utente
-         * preme ENTER, la ricerca viene eseguita automaticamente
-         */
-        document.getElementById('codice').addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
-                cercaProdotto();
-            }
-        });
-
-        // Auto-focus sull'input all'apertura della pagina
-        document.getElementById('codice').focus();
     </script>
 </body>
 </html>
