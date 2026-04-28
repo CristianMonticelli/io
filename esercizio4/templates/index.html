@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Ricerca Prodotti - Esercizio 4</title>
+</head>
+<body>
+    <h1>Ricerca Prodotto</h1>
+    
+    <label for="codice">Codice Prodotto (es. A123):</label><br>
+    <input type="text" id="codice" name="codice" placeholder="Es: A123">
+    <button onclick="cercaProdotto()">Cerca</button>
+    <button onclick="pulisci()">Pulisci</button>
+
+    <div id="risultato"></div>
+
+    <hr>
+    <p><strong>Codici disponibili:</strong></p>
+    <ul>
+        <li>A123 - Dell XPS 13</li>
+        <li>B456 - Apple MacBook Air</li>
+        <li>C789 - Lenovo ThinkPad X1</li>
+    </ul>
+
+    <!-- ========================================================================
+         JAVASCRIPT - La parte più importante!
+         ======================================================================== -->
+    <script>
+        // ====================================================================
+        // FUNZIONE 1: VALIDAZIONE DEL CODICE
+        // ====================================================================
+        
+        /**
+         * Valida il formato del codice prodotto.
+         * Il codice deve essere: 1 LETTERA + 3 NUMERI (es: A123)
+         * 
+         * REGEX: ^[A-Za-z]\d{3}$
+         *   ^ = inizio stringa
+         *   [A-Za-z] = una lettera (maiuscola o minuscola)
+         *   \d{3} = esattamente 3 cifre (0-9)
+         *   $ = fine stringa
+         * 
+         * @param {string} codice - Il codice da validare
+         * @returns {boolean} - true se valido, false altrimenti
+         */
+        function validaCodice(codice) {
+            const pattern = /^[A-Za-z]\d{3}$/;
+            return pattern.test(codice);
+        }
+
+        // ====================================================================
+        // FUNZIONE 2: RICERCA DEL PRODOTTO
+        // ====================================================================
+
+        /**
+         * Questa è la funzione principale che viene chiamata quando 
+         * l'utente clicca il pulsante "Cerca".
+         * 
+         * Flusso:
+         * 1. Legge il valore dell'input
+         * 2. Valida il formato
+         * 3. Se non valido, mostra un avviso
+         * 4. Se valido, fa una richiesta AJAX al server
+         * 5. Visualizza il risultato dinamicamente
+         */
+        function cercaProdotto() {
+            // Step 1: Leggere l'input
+            const codice = document.getElementById('codice').value.trim();
+            const divRisultato = document.getElementById('risultato');
+
+            // Step 2: Validare
+            if (codice === '') {
+                divRisultato.innerHTML = 
+                    '<div class="card-error">' +
+                        '<p class="error-message">⚠️ Inserisci un codice!</p>' +
+                    '</div>';
+                return;
+            }
+
+            if (!validaCodice(codice)) {
+                divRisultato.innerHTML = 
+                    '<div class="card-error">' +
+                        '<p class="error-message">' +
+                            '❌ Codice non valido!<br>' +
+                            'Formato richiesto: 1 lettera + 3 numeri (es: A123)' +
+                        '</p>' +
+                    '</div>';
+                return;
+            }
+
+            // Step 3: Mostrare "Caricamento..."
+            divRisultato.innerHTML = '<div class="loading">⏳ Sto cercando...</div>';
+
+            // Step 4: Fare la richiesta AJAX
+            // Usiamo fetch() che è più moderno di XMLHttpRequest
+            fetch('/prodotto?codice=' + encodeURIComponent(codice))
+                .then(response => {
+                    // response.ok è true se status è 200-299
+                    if (!response.ok) {
+                        // Se c'è un errore, leggiamo il JSON di errore
+                        return response.json().then(data => {
+                            throw new Error(data.errore);
+                        });
+                    }
+                    // Se va bene, ritorniamo il JSON
+                    return response.json();
+                })
+                .then(data => {
+                    // Step 5a: Successo! Visualizziamo i dati
+                    divRisultato.innerHTML = 
+                        '<div class="card-success">' +
+                            '<div class="result-title">✅ Prodotto trovato!</div>' +
+                            '<div class="result-item">' +
+                                '<span class="result-label">💰 Prezzo:</span>' +
+                                '<span class="result-value">' + data.prezzo.toFixed(2) + ' €</span>' +
+                            '</div>' +
+                            '<div class="result-item">' +
+                                '<span class="result-label">🏢 Marca:</span>' +
+                                '<span class="result-value">' + data.marca + '</span>' +
+                            '</div>' +
+                            '<div class="result-item">' +
+                                '<span class="result-label">📱 Modello:</span>' +
+                                '<span class="result-value">' + data.modello + '</span>' +
+                            '</div>' +
+                        '</div>';
+                })
+                .catch(error => {
+                    // Step 5b: Errore! Mostriamo il messaggio
+                    divRisultato.innerHTML = 
+                        '<div class="card-error">' +
+                            '<p class="error-message">❌ ' + error.message + '</p>' +
+                        '</div>';
+                });
+        }
+
+        // ====================================================================
+        // FUNZIONE 3: PULIRE IL MODULO
+        // ====================================================================
+
+        /**
+         * Questa funzione pulisce l'input e il risultato
+         */
+        function pulisci() {
+            document.getElementById('codice').value = '';
+            document.getElementById('risultato').innerHTML = '';
+            document.getElementById('codice').focus();
+        }
+
+        // ====================================================================
+        // BONUS: Premere ENTER per cercare
+        // ====================================================================
+
+        /**
+         * Aggiungiamo un event listener sull'input in modo che se l'utente
+         * preme ENTER, la ricerca viene eseguita automaticamente
+         */
+        document.getElementById('codice').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                cercaProdotto();
+            }
+        });
+
+        // Auto-focus sull'input all'apertura della pagina
+        document.getElementById('codice').focus();
+    </script>
+</body>
+</html>
