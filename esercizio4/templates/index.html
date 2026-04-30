@@ -31,25 +31,36 @@
             } else {
                 // AJAX
                 var xhr = new XMLHttpRequest();
-                xhr.open('GET', '/prodotto?codice=' + text, true);
+                xhr.open('GET', '/prodotto?codice=' + encodeURIComponent(text), true);
                 xhr.onreadystatechange = function() {
                     if(xhr.readyState === 4) {
                         var div = document.getElementById('risultato');
                         if(xhr.status === 200) {
-                            var data = JSON.parse(xhr.responseText);
-                            div.innerHTML = 
-                                '<ul>' +
-                                    '<li>' +
-                                        '<ul>' +
-                                            '<li>Prezzo: ' + data.prezzo + ' €</li>' +
-                                            '<li>Marca: ' + data.marca + '</li>' +
-                                            '<li>Modello: ' + data.modello + '</li>' +
-                                        '</ul>' +
-                                    '</li>' +
-                                '</ul>';
+                            // Parse XML
+                            var xml = xhr.responseXML;
+                            if (!xml) {
+                                div.innerHTML = '<p>Risposta non valida dal server.</p>';
+                                return;
+                            }
+                            var codice = xml.getElementsByTagName('codice')[0].textContent;
+                            var prezzo = xml.getElementsByTagName('prezzo')[0].textContent;
+                            var marca = xml.getElementsByTagName('marca')[0].textContent;
+                            var modello = xml.getElementsByTagName('modello')[0].textContent;
+                            div.innerHTML = '<ul>' +
+                                                '<li>Codice: ' + codice + '</li>' +
+                                                '<li>Prezzo: ' + prezzo + ' €</li>' +
+                                                '<li>Marca: ' + marca + '</li>' +
+                                                '<li>Modello: ' + modello + '</li>' +
+                                              '</ul>';
                         } else {
-                            var err = JSON.parse(xhr.responseText);
-                            div.innerHTML = '<p>' + err.errore + '</p>';
+                            // Parse XML error
+                            var xml = xhr.responseXML;
+                            if (xml) {
+                                var err = xml.getElementsByTagName('errore')[0];
+                                div.innerHTML = '<p>' + (err ? err.textContent : 'Errore') + '</p>';
+                            } else {
+                                div.innerHTML = '<p>Errore del server</p>';
+                            }
                         }
                     }
                 };
