@@ -22,7 +22,7 @@ from flask import Flask, request, jsonify, render_template, g
 import sqlite3
 import re
 import os
-
+from random import randint
 app = Flask(__name__)
 DATABASE = 'prodotti.db'
 
@@ -45,6 +45,18 @@ def get_db():
         db = g._database = sqlite3.connect(DATABASE)
         db.row_factory = sqlite3.Row
     return db
+
+
+def get_prodotto_by_codice(codice):
+    """Cerca un prodotto per codice nel database.
+
+    Restituisce la riga (sqlite3.Row) se trovata, altrimenti None.
+    """
+    db = get_db()
+    prodotto = db.execute(
+        'SELECT * FROM prodotti WHERE codice = ?', (codice,)
+    ).fetchone()
+    return prodotto
 
 @app.teardown_appcontext
 def close_connection(exception):
@@ -101,24 +113,26 @@ def get_prodotto():
     - Se il prodotto non esiste: errore 404 (Not Found)
     - Se tutto ok: JSON con prezzo, marca, modello
     """
-    # Leggiamo il parametro dalla URL
+    # Leggiamo e normalizziamo il parametro dalla URL
     codice = request.args.get('codice', '')
-    
-    # Validazione con regex
-    pattern = re.compile(r'^[A-Za-z]\d{3}$')
+    codice = codice.strip().upper()
+
+    # Validazione con regex (UNA LETTERA + 3 CIFRE)
+    pattern = re.compile(r'^[A-Z]\d{3}$')
     if not pattern.match(codice):
-        return jsonify({'errore': 'Codice non valido'}), 400
-    
-    # Interroghiamo il database
-    db = get_db()
-    prodotto = db.execute('SELECT * FROM prodotti WHERE codice = ?', (codice,)).fetchone()
+        # Restituiamo sempre JSON coerente per gli errori
+        return jsonify({'ok': False, 'errore': 'Codice non valido. Formato atteso: A123'}), 400
+
+    # Interroghiamo il database tramite helper
+    prodotto = get_prodotto_by_codice(codice)
     
     # Se non trovato
     if prodotto is None:
-        return jsonify({'errore': 'Prodotto non trovato'}), 404
+        return jsonify({'ok': False, 'errore': 'Prodotto non trovato'}), 404
     
     # Ritorniamo i dati in JSON
     return jsonify({
+        'ok': True,
         'prezzo': prodotto['prezzo'],
         'marca': prodotto['marca'],
         'modello': prodotto['modello']
@@ -131,12 +145,13 @@ def get_prodotto():
 if __name__ == '__main__':
     # Se il database non esiste, lo creiamo
     if not os.path.exists(DATABASE):
-        print("📦 Creo il database...")
+        print("Creo il database...")
         init_db()
     else:
-        print("✅ Database già presente")
+        print("Database già presente")
     
     # Avviamo il server Flask
     # debug=True significa che ricarica automaticamente quando cambiamo il codice
-    print("🚀 Server avviato su http://localhost:5002/")
-    app.run(debug=True, port=5002)
+    porta = randint(5000, 5999)  # Scegliamo una porta casuale tra 5000 e 5999
+    print(f"Server avviato su http://localhost:{porta}/")
+    app.run(debug=True, port=porta)
